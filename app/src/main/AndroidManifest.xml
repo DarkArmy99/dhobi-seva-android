@@ -15,6 +15,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.StudentActivity" />
+        <activity android:name=".Activities.PurchaseActivity" />
+        <provider
+            android:name=".Providers.CourseProvider"
+            android:authorities="com.geekskool.manisha.vipasna"
+            android:exported="false"
+            android:protectionLevel="signature"
+            android:syncable="true"/>
     </application>
 
 </manifest>
