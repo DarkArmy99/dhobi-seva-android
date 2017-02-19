@@ -17,14 +17,14 @@
         android:inputType="number"
         android:ems="10"
         android:hint="@string/quantity"
-        android:id="@+id/et_quantity" />
+        android:id="@+id/et_purchase_quantity" />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:ems="10"
         android:hint="@string/rate"
-        android:id="@+id/et_rate" />
+        android:id="@+id/et_et_purchase_rate" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         android:inputType="date"
         android:ems="10"
         android:hint="@string/date"
-        android:id="@+id/et_date" />
+        android:id="@+id/et_et_purchase_date" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

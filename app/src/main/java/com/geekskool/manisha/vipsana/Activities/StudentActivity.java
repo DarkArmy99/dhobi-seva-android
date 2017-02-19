@@ -25,11 +25,11 @@ public class StudentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_student);
-        mName = (EditText) findViewById(R.id.et_name);
-        mGender = (EditText) findViewById(R.id.et_gender);
-        mAge = (EditText) findViewById(R.id.et_age);
-        mDeposit = (EditText) findViewById(R.id.et_deposit);
-        mRoomNumber = (EditText) findViewById(R.id.et_room_number);
+        mName = (EditText) findViewById(R.id.et_student_name);
+        mGender = (EditText) findViewById(R.id.et_student_gender);
+        mAge = (EditText) findViewById(R.id.et_student_age);
+        mDeposit = (EditText) findViewById(R.id.et_student_deposit);
+        mRoomNumber = (EditText) findViewById(R.id.et_student_room_number);
 
     }
 
@@ -51,7 +51,6 @@ public class StudentActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, PurchaseActivity.class);
         startActivity(intent);
-
     }
 
 }

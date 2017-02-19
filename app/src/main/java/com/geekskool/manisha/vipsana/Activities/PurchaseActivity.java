@@ -25,9 +25,9 @@ public class PurchaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_purchase);
         mName = (EditText) findViewById(R.id.et_purchase_name);
-        mQuantity = (EditText) findViewById(R.id.et_quantity);
-        mRate = (EditText) findViewById(R.id.et_rate);
-        mDate = (EditText) findViewById(R.id.et_date);
+        mQuantity = (EditText) findViewById(R.id.et_purchase_quantity);
+        mRate = (EditText) findViewById(R.id.et_et_purchase_rate);
+        mDate = (EditText) findViewById(R.id.et_et_purchase_date);
     }
 
     public void savePurchase(View view) {
