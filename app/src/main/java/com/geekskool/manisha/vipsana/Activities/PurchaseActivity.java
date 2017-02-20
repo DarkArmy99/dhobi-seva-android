@@ -19,6 +19,11 @@ public class PurchaseActivity extends AppCompatActivity {
     private EditText mQuantity;
     private EditText mRate;
     private EditText mDate;
+    private static final int PURCHASE_LOADER_ID = 1;
+    public static final int COL_PURCHASE_ID = 0;
+    public static final int COL_PURCHASE_NAME = 1;
+    public static final int COL_PURCHASE_QUANTITY = 2;
+    public static final int COL_PURCHASE_RATE = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

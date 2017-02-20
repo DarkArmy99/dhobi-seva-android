@@ -1,57 +1,48 @@
 package com.geekskool.manisha.vipsana.Adapters;
 
-import android.support.v7.widget.RecyclerView;
+import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.geekskool.manisha.vipsana.Models.Purchase;
+import com.geekskool.manisha.vipsana.Activities.MainActivity;
 import com.geekskool.manisha.vipsana.R;
-
-import java.util.List;
 
 /**
  * Created by manisharana on 19/2/17.
  */
-public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.PurchaseViewHolder> {
+public class PurchaseAdapter extends CursorAdapter {
 
-    private List<Purchase> purchaseList;
 
-    public PurchaseAdapter(List<Purchase> purchaseList) {
-        this.purchaseList = purchaseList;
+
+    public PurchaseAdapter(Context context, Cursor c, int flags) {
+        super(context, c, flags);
+    }
+    
+    @Override
+    public View newView(Context context, Cursor cursor, ViewGroup parent) {
+        View view = LayoutInflater.from(context).inflate(R.layout.purchase_list_row,parent,false);
+        view.setTag(new PurchaseViewHolder(view));
+        return view;
     }
 
     @Override
-    public PurchaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.purchase_list_row, parent, false);
-
-        return new PurchaseViewHolder(itemView);
+    public void bindView(View view, Context context, Cursor cursor) {
+        PurchaseViewHolder vH = (PurchaseViewHolder) view.getTag();
+        vH.pName.setText(cursor.getString(MainActivity.COL_COURSE_NAME));
+        vH.pDate.setText(cursor.getString(MainActivity.COL_COURSE_LOCATION));
+        vH.pAmount.setText(cursor.getString(MainActivity.COL_COURSE_NAME));         // // TODO: 20/2/17  
     }
 
-    @Override
-    public void onBindViewHolder(PurchaseViewHolder holder, int position) {
-        Purchase purchase = purchaseList.get(position);
-        holder.pName.setText(purchase.getName());
-        holder.pDate.setText(String.valueOf(purchase.getDate()));
-        holder.pAmount.setText(String.valueOf(purchase.getRate()));         // need to chane later
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return purchaseList.size();
-    }
-
-
-    public class PurchaseViewHolder extends RecyclerView.ViewHolder{
-
+    public class PurchaseViewHolder{
         private final TextView pName;
         private final TextView pDate;
-        private final TextView pAmount;
 
+        private final TextView pAmount;
         public PurchaseViewHolder(View view) {
-            super(view);
             pName = (TextView) view.findViewById(R.id.tv_purchase_name);
             pDate = (TextView) view.findViewById(R.id.tv_purchase_date);
             pAmount = (TextView) view.findViewById(R.id.tv_purchase_amount);
