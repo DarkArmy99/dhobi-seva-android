@@ -1,59 +1,76 @@
 package com.geekskool.manisha.vipsana.Activities;
 
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.CursorAdapter;
+import android.widget.ListView;
 
 import com.geekskool.manisha.vipsana.Adapters.CourseAdapter;
-import com.geekskool.manisha.vipsana.Models.Course;
+import com.geekskool.manisha.vipsana.Contracts.Contract;
 import com.geekskool.manisha.vipsana.R;
 
-import java.util.ArrayList;
-import java.util.List;
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
-public class MainActivity extends AppCompatActivity {
+    private CursorAdapter mAdapter;
+    private ListView mListView;
+    private static final int LOADER_ID = 10;
+    public static final int COL_COURSE_ID = 0;
+    public static final int COL_COURSE_NAME = 1;
+    public static final int COL_COURSE_LOCATION = 2;
+    private static final int REQUEST_CODE = 1;
 
-    private EditText mDesc;
-    private EditText mLocation;
-    private EditText mDuration;
-    private RecyclerView mRecyclerView;
-    private CourseAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mRecyclerView = (RecyclerView) findViewById(R.id.list_view);
+        setContentView(R.layout.activity_course_list);
+        mListView = (ListView) findViewById(R.id.list_view);
 
-        List<Course> courseList = new ArrayList<>();
-        mAdapter = new CourseAdapter(courseList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(mAdapter);
-
-//        mDesc = (EditText) findViewById(R.id.et_course_desc);
-//        mDuration = (EditText) findViewById(R.id.et_course_duration);
-//        mLocation = (EditText) findViewById(R.id.et_course_location);
+        mAdapter = new CourseAdapter(this, null, 0);
+        mListView.setAdapter(mAdapter);
+        getLoaderManager().initLoader(LOADER_ID, null, this);
 
     }
 
-    public void saveCourse(View view) {
-//        String desc = mDesc.getText().toString();
-//        int duration = Integer.valueOf(mDuration.getText().toString());
-//        String location = mLocation.getText().toString();
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put(Contract.CourseEntry.COLUMN_NAME,desc);
-//        contentValues.put(Contract.CourseEntry.COLUMN_DURATION,duration);
-//        contentValues.put(Contract.CourseEntry.COLUMN_LOCATION,location);
-//
-//        getContentResolver().insert(Contract.CourseEntry.CONTENT_URI, contentValues);
-//
-//        Intent intent = new Intent(this, StudentActivity.class);
-//        startActivity(intent);
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        if (id != LOADER_ID) {
+            return null;
+        }
+        // add sort order based on start date
+        String[] projection = {
+                Contract.CourseEntry.TABLE_NAME + "." + Contract.CourseEntry._ID,
+                Contract.CourseEntry.COLUMN_NAME,
+                Contract.CourseEntry.COLUMN_LOCATION};
+
+        return new CursorLoader(this, Contract.CourseEntry.CONTENT_URI, projection, null, null, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mAdapter.swapCursor(null);
+    }
+
+    public void addCourse(View view) {
+        Intent intent = new Intent(this, AddCourseActivity.class);
+        startActivityForResult(intent,REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
+        }
     }
 }

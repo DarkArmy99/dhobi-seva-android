@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,37 +15,4 @@
         android:layout_margin="@dimen/dp16"
         android:onClick="addCourse"
         android:src="@android:drawable/ic_input_add" />
-
-
-    <!--<EditText-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:inputType="text"-->
-        <!--android:ems="10"-->
-        <!--android:hint="@string/description"-->
-        <!--android:id="@+id/et_course_desc" />-->
-
-    <!--<EditText-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:inputType="numberDecimal"-->
-        <!--android:ems="10"-->
-        <!--android:hint="@string/duration"-->
-        <!--android:id="@+id/et_course_duration" />-->
-
-    <!--<EditText-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:inputType="text"-->
-        <!--android:ems="10"-->
-        <!--android:hint="@string/location"-->
-        <!--android:id="@+id/et_course_location" />-->
-
-    <!--<Button-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="@string/create_course"-->
-        <!--android:id="@+id/btn_create_course"-->
-        <!--android:onClick="saveCourse"-->
-        <!--android:layout_gravity="center|bottom" />-->
 </RelativeLayout>

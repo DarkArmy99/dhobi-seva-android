@@ -16,6 +16,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.StudentActivity" />
+        <activity android:name=".Activities.AddCourseActivity"
+            android:theme="@style/DialogTheme"
+            android:excludeFromRecents="true" />
         <activity android:name=".Activities.PurchaseActivity" />
         <provider
             android:name=".Providers.CourseProvider"

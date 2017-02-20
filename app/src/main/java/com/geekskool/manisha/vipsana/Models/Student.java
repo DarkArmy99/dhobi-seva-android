@@ -1,11 +1,12 @@
 package com.geekskool.manisha.vipsana.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by manisharana on 16/2/17.
  */
-public class Student {
+public class Student implements Serializable {
 
     private String name;
     private boolean isPreviousStudent;

@@ -1,11 +1,12 @@
 package com.geekskool.manisha.vipsana.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by manisharana on 16/2/17.
  */
-public class Course {
+public class Course implements Serializable{
     private int duration;
     private ArrayList<Student> students;
     private String location;
