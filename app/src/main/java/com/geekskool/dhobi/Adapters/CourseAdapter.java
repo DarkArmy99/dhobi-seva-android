@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.geekskool.dhobi.Activities.MainActivity;
 import com.geekskool.dhobi.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by manisharana on 19/2/17.
  */
@@ -30,18 +33,29 @@ public class CourseAdapter extends CursorAdapter{
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         CourseViewHolder vH = (CourseViewHolder) view.getTag();
-        vH.cname.setText(cursor.getString(MainActivity.COL_COURSE_NAME));
-        vH.cdate.setText(cursor.getString(MainActivity.COL_COURSE_LOCATION));
+        vH.name.setText(cursor.getString(MainActivity.COL_COURSE_NAME));
+        long sDate = cursor.getLong(MainActivity.COL_COURSE_START_DATE);
+        vH.sDate.setText(getDateInFormat(sDate));
+        long eDate = cursor.getLong(MainActivity.COL_COURSE_END_DATE);
+        vH.eDate.setText(getDateInFormat(eDate));
+    }
+
+    private String getDateInFormat(long date) {
+        Date curr = new Date(date);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+        return sdf.format(curr);
     }
 
     public class CourseViewHolder{
 
-        private final TextView cname;
-        private final TextView cdate;
+        private final TextView name;
+        private final TextView sDate;
+        private final TextView eDate;
 
         public CourseViewHolder(View view) {
-            cname = (TextView) view.findViewById(R.id.tv_course_name);
-            cdate = (TextView) view.findViewById(R.id.tv_course_date);
+            name = (TextView) view.findViewById(R.id.tv_course_name);
+            sDate = (TextView) view.findViewById(R.id.tv_course_start_date);
+            eDate = (TextView) view.findViewById(R.id.tv_course_end_date);
         }
     }
 

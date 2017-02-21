@@ -52,6 +52,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + Contract.CourseEntry.TABLE_NAME + " (" +
                         Contract.CourseEntry._ID + " INTEGER PRIMARY KEY, " +
                         Contract.CourseEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, "+
+                        Contract.CourseEntry.COLUMN_START_DATE + " INTEGER NOT NULL, "+
+                        Contract.CourseEntry.COLUMN_END_DATE + " INTEGER NOT NULL, "+
                         Contract.CourseEntry.COLUMN_DURATION + " INTEGER NOT NULL, "+
                         Contract.CourseEntry.COLUMN_LOCATION + " TEXT NOT NULL);");
     }

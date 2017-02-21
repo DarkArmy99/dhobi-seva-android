@@ -22,6 +22,8 @@ public class Contract {
 
         public static final String TABLE_NAME = "courses";
         public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_START_DATE = "start_date";
+        public static final String COLUMN_END_DATE = "end_date";
         public static final String COLUMN_DURATION = "duration";
         public static final String COLUMN_LOCATION = "location";
 
