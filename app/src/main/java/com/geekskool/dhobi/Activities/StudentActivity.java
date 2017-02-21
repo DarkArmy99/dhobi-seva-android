@@ -1,4 +1,4 @@
-package com.geekskool.manisha.vipsana.Activities;
+package com.geekskool.dhobi.Activities;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
-import com.geekskool.manisha.vipsana.Contracts.Contract;
-import com.geekskool.manisha.vipsana.R;
+import com.geekskool.dhobi.Contracts.Contract;
+import com.geekskool.dhobi.R;
 
 /**
  * Created by manisharana on 16/2/17.

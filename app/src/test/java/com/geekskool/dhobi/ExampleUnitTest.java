@@ -1,4 +1,4 @@
-package com.geekskool.manisha.vipsana;
+package com.geekskool.dhobi;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.geekskool.manisha.vipsana.Providers;
+package com.geekskool.dhobi.Providers;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
-import com.geekskool.manisha.vipsana.Contracts.Contract;
-import com.geekskool.manisha.vipsana.DbHelper;
+import com.geekskool.dhobi.Contracts.Contract;
+import com.geekskool.dhobi.DbHelper;
 
 /**
  * Created by manisharana on 17/2/17.

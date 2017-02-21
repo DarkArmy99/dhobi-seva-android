@@ -1,4 +1,4 @@
-package com.geekskool.manisha.vipsana.Models;
+package com.geekskool.dhobi.Models;
 
 /**
  * Created by manisharana on 16/2/17.

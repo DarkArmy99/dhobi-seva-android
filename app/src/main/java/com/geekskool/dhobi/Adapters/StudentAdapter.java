@@ -1,4 +1,4 @@
-package com.geekskool.manisha.vipsana.Adapters;
+package com.geekskool.dhobi.Adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.geekskool.manisha.vipsana.Models.Student;
-import com.geekskool.manisha.vipsana.R;
+import com.geekskool.dhobi.Models.Student;
+import com.geekskool.dhobi.R;
 
 import java.util.List;
 

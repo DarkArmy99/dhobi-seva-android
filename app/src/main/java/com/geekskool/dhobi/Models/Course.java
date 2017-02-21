@@ -1,4 +1,4 @@
-package com.geekskool.manisha.vipsana.Models;
+package com.geekskool.dhobi.Models;
 
 import java.io.Serializable;
 import java.util.ArrayList;

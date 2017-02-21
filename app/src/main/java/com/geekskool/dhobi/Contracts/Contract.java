@@ -1,4 +1,4 @@
-package com.geekskool.manisha.vipsana.Contracts;
+package com.geekskool.dhobi.Contracts;
 
 import android.content.ContentUris;
 import android.net.Uri;

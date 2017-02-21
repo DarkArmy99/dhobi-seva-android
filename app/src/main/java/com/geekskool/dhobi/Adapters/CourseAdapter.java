@@ -1,4 +1,4 @@
-package com.geekskool.manisha.vipsana.Adapters;
+package com.geekskool.dhobi.Adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.geekskool.manisha.vipsana.Activities.MainActivity;
-import com.geekskool.manisha.vipsana.R;
+import com.geekskool.dhobi.Activities.MainActivity;
+import com.geekskool.dhobi.R;
 
 /**
  * Created by manisharana on 19/2/17.

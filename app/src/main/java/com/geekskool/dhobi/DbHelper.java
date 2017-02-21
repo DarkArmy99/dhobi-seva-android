@@ -1,10 +1,10 @@
-package com.geekskool.manisha.vipsana;
+package com.geekskool.dhobi;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.geekskool.manisha.vipsana.Contracts.Contract;
+import com.geekskool.dhobi.Contracts.Contract;
 
 /**
  * Created by manisharana on 17/2/17.

@@ -1,4 +1,4 @@
-package com.geekskool.manisha.vipsana.Activities;
+package com.geekskool.dhobi.Activities;
 
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -11,9 +11,9 @@ import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 
-import com.geekskool.manisha.vipsana.Adapters.CourseAdapter;
-import com.geekskool.manisha.vipsana.Contracts.Contract;
-import com.geekskool.manisha.vipsana.R;
+import com.geekskool.dhobi.Adapters.CourseAdapter;
+import com.geekskool.dhobi.Contracts.Contract;
+import com.geekskool.dhobi.R;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
