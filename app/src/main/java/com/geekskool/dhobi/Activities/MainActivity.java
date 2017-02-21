@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final int LOADER_ID = 10;
     public static final int COL_COURSE_ID = 0;
     public static final int COL_COURSE_NAME = 1;
-    public static final int COL_COURSE_LOCATION = 2;
-    private static final int REQUEST_CODE = 1;
+    public static final int COL_COURSE_START_DATE = 2;
+    public static final int COL_COURSE_END_DATE = 3;
 
 
     @Override
@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         String[] projection = {
                 Contract.CourseEntry.TABLE_NAME + "." + Contract.CourseEntry._ID,
                 Contract.CourseEntry.COLUMN_NAME,
-                Contract.CourseEntry.COLUMN_LOCATION};
+                Contract.CourseEntry.COLUMN_START_DATE,
+                Contract.CourseEntry.COLUMN_END_DATE};
 
         return new CursorLoader(this, Contract.CourseEntry.CONTENT_URI, projection, null, null, null);
     }
@@ -64,13 +65,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void addCourse(View view) {
         Intent intent = new Intent(this, AddCourseActivity.class);
-        startActivityForResult(intent,REQUEST_CODE);
+        startActivity(intent);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
-        }
-    }
 }
