@@ -14,9 +14,8 @@ public class Course implements Serializable{
     private long endDate;
     private String desc;
 
-    public Course(int duration, ArrayList<Student> students, String location, long startDate, long endDate, String desc) {
+    public Course(int duration, String location, long startDate, long endDate, String desc) {
         this.duration = duration;
-        this.students = students;
         this.location = location;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -70,4 +69,5 @@ public class Course implements Serializable{
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
 }

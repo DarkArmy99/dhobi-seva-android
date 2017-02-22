@@ -22,11 +22,11 @@
     </FrameLayout>
 
     <EditText
-        android:id="@+id/et_course_desc"
+        android:id="@+id/et_course_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/description"
+        android:hint="@string/name"
         android:inputType="text"
         android:padding="@dimen/dp8"/>
 
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/duration"
-        android:inputType="numberDecimal"
+        android:inputType="number"
         android:padding="@dimen/dp8"/>
 
     <EditText
@@ -56,9 +56,9 @@
         <TextView
             android:id="@+id/et_start_date"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:paddingBottom="@dimen/dp8"
             android:textSize="@dimen/sp16"
-            android:layout_height="wrap_content"
             android:hint="@string/start_date" />
         <DatePicker
             android:layout_width="wrap_content"
@@ -73,6 +73,6 @@
     android:layout_height="wrap_content"
     android:text="@string/create_course"
     android:id="@+id/btn_create_course"
-    android:onClick="saveCourse"
+    android:onClick="validateCourse"
     android:layout_gravity="center|bottom" />
 </LinearLayout>
