@@ -21,7 +21,7 @@
             android:excludeFromRecents="true" />
         <activity android:name="com.geekskool.dhobi.Activities.PurchaseActivity" />
         <provider
-            android:name="com.geekskool.dhobi.Providers.CourseProvider"
+            android:name=".Providers.DataProvider"
             android:authorities="com.geekskool.manisha.vipasna"
             android:exported="false"
             android:protectionLevel="signature"

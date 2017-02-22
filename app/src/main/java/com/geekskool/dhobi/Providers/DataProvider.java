@@ -14,7 +14,7 @@ import com.geekskool.dhobi.DbHelper;
 /**
  * Created by manisharana on 17/2/17.
  */
-public class CourseProvider extends ContentProvider {
+public class DataProvider extends ContentProvider {
 
 
     private static final int COURSE = 100;

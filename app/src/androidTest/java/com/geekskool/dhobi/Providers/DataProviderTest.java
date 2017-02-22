@@ -25,12 +25,12 @@ import static com.geekskool.dhobi.Contracts.Contract.CourseEntry.COLUMN_START_DA
  * Created by manisharana on 22/2/17.
  */
 @RunWith(AndroidJUnit4.class)
-public class CourseProviderTest extends ProviderTestCase2<CourseProvider> {
+public class DataProviderTest extends ProviderTestCase2<DataProvider> {
 
     private ContentValues values;
 
-    public CourseProviderTest() {
-        super(CourseProvider.class, Contract.CONTENT_AUTHORITY);
+    public DataProviderTest() {
+        super(DataProvider.class, Contract.CONTENT_AUTHORITY);
     }
 
     @Before
