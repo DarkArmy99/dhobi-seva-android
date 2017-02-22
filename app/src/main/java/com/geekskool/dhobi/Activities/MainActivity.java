@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mAdapter = new CourseAdapter(this, null, 0);
         mListView.setAdapter(mAdapter);
         getLoaderManager().initLoader(LOADER_ID, null, this);
-
     }
 
     @Override
@@ -43,14 +42,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (id != LOADER_ID) {
             return null;
         }
-        // add sort order based on start date
+
+        String sortOrder = Contract.CourseEntry.COLUMN_START_DATE + " DESC ";
         String[] projection = {
                 Contract.CourseEntry.TABLE_NAME + "." + Contract.CourseEntry._ID,
                 Contract.CourseEntry.COLUMN_NAME,
                 Contract.CourseEntry.COLUMN_START_DATE,
                 Contract.CourseEntry.COLUMN_END_DATE};
 
-        return new CursorLoader(this, Contract.CourseEntry.CONTENT_URI, projection, null, null, null);
+        return new CursorLoader(this, Contract.CourseEntry.CONTENT_URI, projection, null, null, sortOrder);
     }
 
     @Override

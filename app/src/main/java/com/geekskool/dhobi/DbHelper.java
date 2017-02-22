@@ -10,7 +10,7 @@ import com.geekskool.dhobi.Contracts.Contract;
  * Created by manisharana on 17/2/17.
  */
 public class DbHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "vipasanaDatabase.db";
 
 
@@ -26,36 +26,15 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     private void addPurchaseTable(SQLiteDatabase db) {
-        db.execSQL(
-                "CREATE TABLE " + Contract.PurchaseEntry.TABLE_NAME + " (" +
-                        Contract.PurchaseEntry._ID + " INTEGER PRIMARY KEY, " +
-                        Contract.PurchaseEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, "+
-                        Contract.PurchaseEntry.COLUMN_QUANTITY + " INTEGER, "+
-                        Contract.PurchaseEntry.COLUMN_RATE + " INTEGER, "+
-                        Contract.PurchaseEntry.COLUMN_DATE + " TEXT NOT NULL, "+
-                        Contract.PurchaseEntry.COLUMN_TOTAL + " INTEGER);");
+        db.execSQL(Contract.CourseEntry.getCreateStatement());
     }
 
     private void addStudentTable(SQLiteDatabase db) {
-        String sql = "CREATE TABLE " + Contract.StudentEntry.TABLE_NAME + " (" +
-                Contract.StudentEntry._ID + " INTEGER PRIMARY KEY, " +
-                Contract.StudentEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, " +
-                Contract.StudentEntry.COLUMN_AGE + " INTEGER, " +
-                Contract.StudentEntry.COLUMN_GENDER + " TEXT, " +
-                Contract.StudentEntry.COLUMN_ROOM_NUMBER + " TEXT, " +
-                Contract.StudentEntry.COLUMN_DEPOSIT + " INTEGER);";
-        db.execSQL(sql);
+        db.execSQL(Contract.StudentEntry.getCreateStatement());
     }
 
     private void addCourseTable(SQLiteDatabase db) {
-        db.execSQL(
-                "CREATE TABLE " + Contract.CourseEntry.TABLE_NAME + " (" +
-                        Contract.CourseEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        Contract.CourseEntry.COLUMN_NAME + " TEXT NOT NULL, "+
-                        Contract.CourseEntry.COLUMN_START_DATE + " INTEGER NOT NULL, "+
-                        Contract.CourseEntry.COLUMN_END_DATE + " INTEGER NOT NULL, "+
-                        Contract.CourseEntry.COLUMN_DURATION + " INTEGER NOT NULL, "+
-                        Contract.CourseEntry.COLUMN_LOCATION + " TEXT NOT NULL);");
+        db.execSQL(Contract.PurchaseEntry.getCreateStatement());
     }
 
     @Override

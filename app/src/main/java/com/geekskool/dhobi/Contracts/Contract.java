@@ -30,6 +30,16 @@ public class Contract {
         public static Uri buildCourseUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+
+        public static String getCreateStatement() {
+            return "CREATE TABLE " + Contract.CourseEntry.TABLE_NAME + " (" +
+                    Contract.CourseEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    Contract.CourseEntry.COLUMN_NAME + " TEXT NOT NULL, "+
+                    Contract.CourseEntry.COLUMN_START_DATE + " INTEGER NOT NULL, "+
+                    Contract.CourseEntry.COLUMN_END_DATE + " INTEGER NOT NULL, "+
+                    Contract.CourseEntry.COLUMN_DURATION + " INTEGER NOT NULL, "+
+                    Contract.CourseEntry.COLUMN_LOCATION + " TEXT NOT NULL);";
+        }
     }
 
 
@@ -48,6 +58,16 @@ public class Contract {
         public static Uri buildCourseUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+
+        public static String getCreateStatement() {
+            return "CREATE TABLE " + Contract.StudentEntry.TABLE_NAME + " (" +
+                    Contract.StudentEntry._ID + " INTEGER PRIMARY KEY, " +
+                    Contract.StudentEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, " +
+                    Contract.StudentEntry.COLUMN_AGE + " INTEGER, " +
+                    Contract.StudentEntry.COLUMN_GENDER + " TEXT, " +
+                    Contract.StudentEntry.COLUMN_ROOM_NUMBER + " TEXT, " +
+                    Contract.StudentEntry.COLUMN_DEPOSIT + " INTEGER);";
+        }
     }
 
     public static final class PurchaseEntry implements BaseColumns {
@@ -64,6 +84,16 @@ public class Contract {
 
         public static Uri buildCourseUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static String getCreateStatement() {
+            return "CREATE TABLE " + Contract.PurchaseEntry.TABLE_NAME + " (" +
+                    Contract.PurchaseEntry._ID + " INTEGER PRIMARY KEY, " +
+                    Contract.PurchaseEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, "+
+                    Contract.PurchaseEntry.COLUMN_QUANTITY + " INTEGER, "+
+                    Contract.PurchaseEntry.COLUMN_RATE + " INTEGER, "+
+                    Contract.PurchaseEntry.COLUMN_DATE + " TEXT NOT NULL, "+
+                    Contract.PurchaseEntry.COLUMN_TOTAL + " INTEGER);";
         }
     }
 }

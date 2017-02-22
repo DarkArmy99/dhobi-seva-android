@@ -20,6 +20,7 @@ import static com.geekskool.dhobi.Contracts.Contract.CourseEntry.COLUMN_END_DATE
 import static com.geekskool.dhobi.Contracts.Contract.CourseEntry.COLUMN_LOCATION;
 import static com.geekskool.dhobi.Contracts.Contract.CourseEntry.COLUMN_NAME;
 import static com.geekskool.dhobi.Contracts.Contract.CourseEntry.COLUMN_START_DATE;
+import static com.geekskool.dhobi.Util.isInvalid;
 
 /**
  * Created by manisharana on 20/2/17.
@@ -31,8 +32,9 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
     private EditText mDuration;
     private DatePicker mStartDate;
     private long startDate;
-    private long endDate;
     private View rootView;
+    private final static int MINUTE = 60000;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,8 +50,8 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
         mDuration = (EditText) findViewById(R.id.et_course_duration);
         mLocation = (EditText) findViewById(R.id.et_course_location);
         mStartDate = (DatePicker) findViewById(R.id.dp_start_date);
-        mStartDate.setMinDate(cal.getTimeInMillis());
-        mStartDate.init(year,month,day,this);
+        mStartDate.init(year, month, day, this);
+        mStartDate.setMinDate(cal.getTimeInMillis() - MINUTE);
     }
 
     public void closeDialogBox(View view) {
@@ -59,8 +61,9 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
 
     public void validateCourse(View view) {
         Course course = getCourse();
-        if(course == null)
-            Snackbar.make(rootView,R.string.should_not_be_empty,Snackbar.LENGTH_LONG).show();
+
+        if (course == null)
+            Snackbar.make(rootView, R.string.should_not_be_empty, Snackbar.LENGTH_LONG).show();
         else {
             saveCourse(course);
             finish();
@@ -70,39 +73,38 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
 
     private Course getCourse() {
         String name = mName.getText().toString();
-        if(isInvalid(name)) return null;
+        if (isInvalid(name)) return null;
         String duration = mDuration.getText().toString();
-        if(isInvalid(duration)) return null;
+        if (isInvalid(duration)) return null;
         String location = mLocation.getText().toString();
-        if(isInvalid(location)) return null;
+        if (isInvalid(location)) return null;
 
-        return new Course(Integer.valueOf(duration), location, startDate, endDate, name);
+        Integer days = Integer.valueOf(duration);
+        long endDate = getEndDate(days);
+        return new Course(days, location, startDate, endDate, name);
     }
 
-    private boolean isInvalid(String name) {
-        return name == null || name.trim().length() == 0;
+    private long getEndDate(Integer days) {
+        return startDate + days * 24 * 60 * 60 * 1000;
     }
+
 
     private void saveCourse(Course course) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME,course.getDesc());
+        values.put(COLUMN_NAME, course.getDesc());
         values.put(COLUMN_START_DATE, course.getStartDate());
-        values.put(COLUMN_END_DATE,course.getEndDate());
-        values.put(COLUMN_DURATION,course.getDuration());
-        values.put(COLUMN_LOCATION,course.getLocation());
+        values.put(COLUMN_END_DATE, course.getEndDate());
+        values.put(COLUMN_DURATION, course.getDuration());
+        values.put(COLUMN_LOCATION, course.getLocation());
         getContentResolver().insert(CourseEntry.CONTENT_URI, values);
     }
 
     @Override
     public void onDateChanged(DatePicker view, int year, int month, int day) {
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR,year);
-        cal.set(Calendar.MONTH,month);
-        cal.set(Calendar.DAY_OF_MONTH,day);
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
         startDate = cal.getTimeInMillis();
-        int duration = Integer.valueOf(mDuration.getText().toString());
-        cal.add(Calendar.DAY_OF_MONTH,duration);
-        endDate = cal.getTimeInMillis();
     }
-    
 }
