@@ -11,7 +11,7 @@ import com.geekskool.dhobi.Contracts.Contract;
  */
 public class DbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "vipasanaDatabase.db";
+    private static final String DATABASE_NAME = "vipasanaDatabase";
 
 
     public DbHelper(Context context) {

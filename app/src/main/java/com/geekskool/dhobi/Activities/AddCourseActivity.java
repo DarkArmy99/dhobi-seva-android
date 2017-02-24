@@ -3,7 +3,6 @@ package com.geekskool.dhobi.Activities;
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.DatePicker;
@@ -60,29 +59,25 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
 
 
     public void validateCourse(View view) {
-        Course course = getCourse();
-
-        if (course == null)
-            Snackbar.make(rootView, R.string.should_not_be_empty, Snackbar.LENGTH_LONG).show();
-        else {
-            saveCourse(course);
-            finish();
-        }
-
-    }
-
-    private Course getCourse() {
         String name = mName.getText().toString();
-        if (isInvalid(name)) return null;
         String duration = mDuration.getText().toString();
-        if (isInvalid(duration)) return null;
         String location = mLocation.getText().toString();
-        if (isInvalid(location)) return null;
+
+        if (isInvalid(name)) {setError(mName); return;}
+        if (isInvalid(duration)) {setError(mDuration); return;}
+        if (isInvalid(location)) {setError(mLocation); return;}
 
         Integer days = Integer.valueOf(duration);
-        long endDate = getEndDate(days);
-        return new Course(days, location, startDate, endDate, name);
+        Course course = new Course(days, location, startDate, getEndDate(days), name);
+        saveCourse(course);
+        finish();
     }
+
+    private void setError(EditText editText) {
+        editText.setError(getString(R.string.invalid_error));
+    }
+
+
 
     private long getEndDate(Integer days) {
         return startDate + Constants.getMilliseconds(days);

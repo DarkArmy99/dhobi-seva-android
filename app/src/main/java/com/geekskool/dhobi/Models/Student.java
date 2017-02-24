@@ -1,7 +1,6 @@
 package com.geekskool.dhobi.Models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by manisharana on 16/2/17.
@@ -9,22 +8,20 @@ import java.util.ArrayList;
 public class Student implements Serializable {
 
     private String name;
-    private boolean isPreviousStudent;
+    private boolean isOldStudent;
     private String gender;   // convert to enum
     private int age;
     private int deposit;
-    private ArrayList<Purchase> purchases;
-    private ArrayList<Laundry> laundryList;
     private String roomNumber;
+    private Finance finance;
 
-    public Student(String name, boolean isPreviousStudent, String gender, int age, int deposit, ArrayList<Purchase> purchases, ArrayList<Laundry> laundryList, String roomNumber) {
+    public Student(String name, boolean isOldStudent, String gender, int age, int deposit,Finance finance, String roomNumber) {
         this.name = name;
-        this.isPreviousStudent = isPreviousStudent;
+        this.isOldStudent = isOldStudent;
         this.gender = gender;
         this.age = age;
         this.deposit = deposit;
-        this.purchases = purchases;
-        this.laundryList = laundryList;
+        this.finance = finance;
         this.roomNumber = roomNumber;
     }
 
@@ -32,8 +29,8 @@ public class Student implements Serializable {
         return name;
     }
 
-    public boolean isPreviousStudent() {
-        return isPreviousStudent;
+    public boolean isOldStudent() {
+        return isOldStudent;
     }
 
     public String getGender() {
@@ -48,15 +45,11 @@ public class Student implements Serializable {
         return deposit;
     }
 
-    public ArrayList<Purchase> getPurchases() {
-        return purchases;
-    }
-
-    public ArrayList<Laundry> getLaundryList() {
-        return laundryList;
-    }
-
     public String getRoomNumber() {
         return roomNumber;
+    }
+
+    public Finance getFinance() {
+        return finance;
     }
 }

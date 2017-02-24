@@ -17,4 +17,5 @@
     <string name="start_date">Start Date</string>
     <string name="end_date">End Date</string>
     <string name="should_not_be_empty">Fields should not be empty</string>
+    <string name="invalid_error">This field is required.</string>
 </resources>
