@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import com.geekskool.dhobi.Constants;
 import com.geekskool.dhobi.Contracts.Contract.CourseEntry;
 import com.geekskool.dhobi.Models.Course;
 import com.geekskool.dhobi.R;
@@ -33,7 +34,6 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
     private DatePicker mStartDate;
     private long startDate;
     private View rootView;
-    private final static int MINUTE = 60000;
 
 
     @Override
@@ -51,7 +51,7 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
         mLocation = (EditText) findViewById(R.id.et_course_location);
         mStartDate = (DatePicker) findViewById(R.id.dp_start_date);
         mStartDate.init(year, month, day, this);
-        mStartDate.setMinDate(cal.getTimeInMillis() - MINUTE);
+        mStartDate.setMinDate(cal.getTimeInMillis() - Constants.MIN_IN_MILLIS);
     }
 
     public void closeDialogBox(View view) {
@@ -85,7 +85,7 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
     }
 
     private long getEndDate(Integer days) {
-        return startDate + days * 24 * 60 * 60 * 1000;
+        return startDate + Constants.getMilliseconds(days);
     }
 
 
