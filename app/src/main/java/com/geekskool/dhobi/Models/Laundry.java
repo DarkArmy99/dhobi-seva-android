@@ -9,7 +9,4 @@ public class Laundry extends Purchase{
         super("Laundry",quantity,rate,total,date);
     }
 
-
-
-
 }

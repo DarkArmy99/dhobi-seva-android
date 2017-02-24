@@ -22,39 +22,19 @@ public class Purchase {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getQuantity() {
         return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public float getRate() {
         return rate;
     }
 
-    public void setRate(float rate) {
-        this.rate = rate;
-    }
-
     public float getTotal() {
         return total;
     }
 
-    public void setTotal(float total) {
-        this.total = total;
-    }
-
     public long getDate() {
         return date;
-    }
-
-    public void setDate(long date) {
-        this.date = date;
     }
 }

@@ -26,48 +26,24 @@ public class Course implements Serializable{
         return duration;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
     public ArrayList<Student> getStudents() {
         return students;
-    }
-
-    public void setStudents(ArrayList<Student> students) {
-        this.students = students;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public long getStartDate() {
         return startDate;
-    }
-
-    public void setStartDate(long startDate) {
-        this.startDate = startDate;
     }
 
     public long getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(long endDate) {
-        this.endDate = endDate;
-    }
-
     public String getDesc() {
         return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 
 }
