@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
-import com.geekskool.dhobi.Constants;
+import com.geekskool.dhobi.Helpers.Constants;
 import com.geekskool.dhobi.Contracts.Contract.CourseEntry;
 import com.geekskool.dhobi.Models.Course;
 import com.geekskool.dhobi.R;
@@ -20,7 +20,7 @@ import static com.geekskool.dhobi.Contracts.Contract.CourseEntry.COLUMN_END_DATE
 import static com.geekskool.dhobi.Contracts.Contract.CourseEntry.COLUMN_LOCATION;
 import static com.geekskool.dhobi.Contracts.Contract.CourseEntry.COLUMN_NAME;
 import static com.geekskool.dhobi.Contracts.Contract.CourseEntry.COLUMN_START_DATE;
-import static com.geekskool.dhobi.Util.isInvalid;
+import static com.geekskool.dhobi.Helpers.Util.isInvalid;
 
 /**
  * Created by manisharana on 20/2/17.
@@ -86,7 +86,7 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
 
     private void saveCourse(Course course) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, course.getDesc());
+        values.put(COLUMN_NAME, course.getDescription());
         values.put(COLUMN_START_DATE, course.getStartDate());
         values.put(COLUMN_END_DATE, course.getEndDate());
         values.put(COLUMN_DURATION, course.getDuration());

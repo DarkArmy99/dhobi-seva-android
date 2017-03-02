@@ -1,4 +1,4 @@
-package com.geekskool.dhobi;
+package com.geekskool.dhobi.Db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

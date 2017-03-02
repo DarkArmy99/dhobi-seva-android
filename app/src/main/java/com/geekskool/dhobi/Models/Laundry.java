@@ -8,5 +8,4 @@ public class Laundry extends Purchase{
     public Laundry(int quantity, float rate, float total, long date) {
         super("Laundry",quantity,rate,total,date);
     }
-
 }

@@ -1,4 +1,4 @@
-package com.geekskool.dhobi.Providers;
+package com.geekskool.dhobi.Db;
 
 import android.content.ContentUris;
 import android.content.ContentValues;

@@ -1,17 +1,18 @@
 package com.geekskool.dhobi.Models;
 
-import java.util.ArrayList;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
 /**
  * Created by manisharana on 24/2/17.
  */
 
-public class Finance {
+public class Finance extends RealmObject{
 
-    private ArrayList<Purchase> purchases;
-    private ArrayList<Laundry> laundryList;
+    private RealmList<Purchase> purchases;
+    private RealmList<Laundry> laundryList;
 
-    public Finance(ArrayList<Purchase> purchases, ArrayList<Laundry> laundryList) {
+    public Finance(RealmList<Purchase> purchases, RealmList<Laundry> laundryList) {
         this.purchases = purchases;
         this.laundryList = laundryList;
     }

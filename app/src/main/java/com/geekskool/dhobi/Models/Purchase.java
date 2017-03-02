@@ -1,9 +1,11 @@
 package com.geekskool.dhobi.Models;
 
+import io.realm.RealmObject;
+
 /**
  * Created by manisharana on 16/2/17.
  */
-public class Purchase {
+public class Purchase extends RealmObject {
     private String name;
     private int quantity;
     private float rate;

@@ -1,4 +1,4 @@
-package com.geekskool.dhobi.Providers;
+package com.geekskool.dhobi.Db;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 
 import com.geekskool.dhobi.Contracts.Contract;
-import com.geekskool.dhobi.DbHelper;
 
 /**
  * Created by manisharana on 17/2/17.

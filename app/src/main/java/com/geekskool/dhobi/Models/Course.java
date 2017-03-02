@@ -1,32 +1,51 @@
 package com.geekskool.dhobi.Models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 /**
  * Created by manisharana on 16/2/17.
  */
-public class Course implements Serializable{
-    private int duration;
-    private ArrayList<Student> students;
-    private String location;
-    private long startDate;
-    private long endDate;
-    private String desc;
+public class Course extends RealmObject implements Serializable {
 
-    public Course(int duration, String location, long startDate, long endDate, String desc) {
+    @PrimaryKey
+    @Required
+    private String id;
+
+    @Required
+    private int duration;
+
+    private RealmList<Student> students;
+
+    @Required
+    private String location;
+
+    @Required
+    private long startDate;
+
+    @Required
+    private long endDate;
+
+    @Required
+    private String description;
+
+    public Course(int duration, String location, long startDate, long endDate, String description) {
         this.duration = duration;
         this.location = location;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.desc = desc;
+        this.description = description;
     }
 
     public int getDuration() {
         return duration;
     }
 
-    public ArrayList<Student> getStudents() {
+    public RealmList<Student> getStudents() {
         return students;
     }
 
@@ -42,8 +61,8 @@ public class Course implements Serializable{
         return endDate;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
 }

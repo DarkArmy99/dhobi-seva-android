@@ -4,6 +4,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".VipasnaApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -21,7 +22,7 @@
             android:excludeFromRecents="true" />
         <activity android:name="com.geekskool.dhobi.Activities.PurchaseActivity" />
         <provider
-            android:name=".Providers.DataProvider"
+            android:name=".Db.DataProvider"
             android:authorities="com.geekskool.manisha.vipasna"
             android:exported="false"
             android:protectionLevel="signature"
