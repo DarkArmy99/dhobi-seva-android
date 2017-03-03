@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".Activities.AddCourseActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@android:drawable/ic_menu_close_clear_cancel"
+            android:onClick="closeDialogBox" />
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/et_course_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/name"
+        android:inputType="text"
+        android:padding="@dimen/dp8"/>
+
+    <EditText
+        android:id="@+id/et_course_duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/duration"
+        android:inputType="number"
+        android:padding="@dimen/dp8"/>
+
+    <EditText
+        android:id="@+id/et_course_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/location"
+        android:inputType="text"
+        android:padding="@dimen/dp8"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp8"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/et_start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/dp8"
+            android:textSize="@dimen/sp16"
+            android:hint="@string/start_date" />
+        <DatePicker
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/dp_start_date"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="false" />
+    </LinearLayout>
+
+    <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/create_course"
+    android:id="@+id/btn_create_course"
+    android:onClick="validateCourse"
+    android:layout_gravity="center|bottom" />
+</LinearLayout>
