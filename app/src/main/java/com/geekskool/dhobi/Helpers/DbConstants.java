@@ -5,9 +5,6 @@ package com.geekskool.dhobi.Helpers;
  */
 
 public class DbConstants {
-    // for intents
-    public static final String COURSE_ID = "COURSE_ID";
-
     // column names
     public static final String COURSE_START_DATE = "startDate";
     public static final String courseID = "id";

@@ -1,12 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
+    android:focusable="false"
     android:paddingLeft="@dimen/dp16"
     android:paddingRight="@dimen/dp16"
     android:paddingTop="@dimen/dp10"
     android:paddingBottom="@dimen/dp10"
-    android:clickable="true"
     android:background="?android:attr/selectableItemBackground"
     android:orientation="horizontal">
 
@@ -20,6 +19,11 @@
 
     <TextView
         android:id="@+id/tv_student_room_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_student_seat_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </LinearLayout>

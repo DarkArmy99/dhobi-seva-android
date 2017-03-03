@@ -21,6 +21,7 @@
             android:theme="@style/DialogTheme"
             android:excludeFromRecents="true" />
         <activity android:name="com.geekskool.dhobi.Activities.PurchaseActivity" />
+        <activity android:name=".Activities.StudentListActivity" />
     </application>
 
 </manifest>

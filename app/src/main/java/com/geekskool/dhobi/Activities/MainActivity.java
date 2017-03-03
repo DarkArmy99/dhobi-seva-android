@@ -8,9 +8,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import com.geekskool.dhobi.Adapters.CourseAdapter;
 import com.geekskool.dhobi.Db.CourseRepository;
+import com.geekskool.dhobi.Helpers.Constants;
 import com.geekskool.dhobi.Helpers.DbConstants;
 import com.geekskool.dhobi.Models.Course;
 import com.geekskool.dhobi.R;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_course_list);
+        setContentView(R.layout.activity_list_view);
         courseRepository = new CourseRepository();
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_courses);
         setUpRecyclerView();
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToNext(Course course) {
         Intent intent = new Intent(this, StudentActivity.class);
-        intent.putExtra(DbConstants.COURSE_ID, course.getId());
+        intent.putExtra(Constants.COURSE_ID, course.getId());
         startActivity(intent);
     }
 

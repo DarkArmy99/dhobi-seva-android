@@ -1,10 +1,12 @@
 package com.geekskool.dhobi.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
+import com.geekskool.dhobi.Helpers.Constants;
 import com.geekskool.dhobi.R;
 
 /**
@@ -12,31 +14,27 @@ import com.geekskool.dhobi.R;
  */
 public class StudentActivity extends AppCompatActivity {
 
-    private EditText mName;
-    private EditText mGender;
-    private EditText mAge;
-    private EditText mDeposit;
-    private EditText mRoomNumber;
+    private EditText mNameView;
+    private EditText mSeatNumberView;
+    private EditText mRoomNumberView;
+    private String courseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_student);
-        mName = (EditText) findViewById(R.id.et_student_name);
-        mGender = (EditText) findViewById(R.id.et_student_gender);
-        mAge = (EditText) findViewById(R.id.et_student_age);
-        mDeposit = (EditText) findViewById(R.id.et_student_deposit);
-        mRoomNumber = (EditText) findViewById(R.id.et_student_room_number);
-
+        Intent intent = getIntent();
+        courseId = intent.getStringExtra(Constants.COURSE_ID);
+        mNameView = (EditText) findViewById(R.id.et_student_name);
+        mRoomNumberView = (EditText) findViewById(R.id.et_student_room_number);
+        mSeatNumberView = (EditText) findViewById(R.id.et_student_seat_number);
     }
 
     public void saveStudent(View view) {
-        String name = mName.getText().toString();
-        String gender = mGender.getText().toString();
-        String roomNumber = mRoomNumber.getText().toString();
-
-        int age = Integer.valueOf(mAge.getText().toString());
-        int deposit = Integer.valueOf(mDeposit.getText().toString());
+        String name = mNameView.getText().toString();
+        String seatNUmber = mSeatNumberView.getText().toString();
+        String roomNumber = mRoomNumberView.getText().toString();
+        finish();
     }
 
 }
