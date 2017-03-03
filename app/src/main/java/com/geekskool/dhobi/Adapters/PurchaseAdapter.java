@@ -15,8 +15,6 @@ import com.geekskool.dhobi.R;
  */
 public class PurchaseAdapter extends CursorAdapter {
 
-
-
     public PurchaseAdapter(Context context, Cursor c, int flags) {
         super(context, c, flags);
     }

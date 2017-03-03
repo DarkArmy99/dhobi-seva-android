@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.geekskool.dhobi.Activities.StudentActivity" />
+        <activity android:name="com.geekskool.dhobi.Activities.AddStudentActivity"
+            android:theme="@style/DialogTheme"/>
         <activity android:name="com.geekskool.dhobi.Activities.AddCourseActivity"
             android:theme="@style/DialogTheme"
             android:excludeFromRecents="true" />

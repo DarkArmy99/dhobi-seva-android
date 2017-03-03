@@ -14,6 +14,7 @@ public class Constants {
 
     // for intents
     public static final String COURSE_ID = "COURSE_ID";
+    public static final String STUDENT_ID = "STUDENT_ID";
 
     public static long getMilliseconds(Integer days) {
         return days * HRS_TO_MILLIS;

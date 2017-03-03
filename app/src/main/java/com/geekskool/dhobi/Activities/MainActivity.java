@@ -8,10 +8,10 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import com.geekskool.dhobi.Adapters.CourseAdapter;
 import com.geekskool.dhobi.Db.CourseRepository;
 import com.geekskool.dhobi.Helpers.Constants;
-import com.geekskool.dhobi.Helpers.DbConstants;
 import com.geekskool.dhobi.Models.Course;
 import com.geekskool.dhobi.R;
 
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
         courseRepository = new CourseRepository();
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_courses);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
         setUpRecyclerView();
     }
 
@@ -45,13 +45,13 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    public void addCourse(View view) {
+    public void addModelView(View view) {
         Intent intent = new Intent(this, AddCourseActivity.class);
         startActivity(intent);
     }
 
     public void goToNext(Course course) {
-        Intent intent = new Intent(this, StudentActivity.class);
+        Intent intent = new Intent(this, StudentListActivity.class);
         intent.putExtra(Constants.COURSE_ID, course.getId());
         startActivity(intent);
     }
@@ -62,4 +62,5 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(null);
         courseRepository.close();
     }
+
 }
