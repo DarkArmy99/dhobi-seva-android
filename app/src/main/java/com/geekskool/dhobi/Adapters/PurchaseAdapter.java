@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import com.geekskool.dhobi.Activities.PurchaseActivity;
 import com.geekskool.dhobi.R;
 
 /**
@@ -32,9 +31,6 @@ public class PurchaseAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         PurchaseViewHolder vH = (PurchaseViewHolder) view.getTag();
-        vH.pName.setText(cursor.getString(PurchaseActivity.COL_PURCHASE_NAME));
-        vH.pDate.setText(cursor.getString(PurchaseActivity.COL_PURCHASE_QUANTITY));
-        vH.pAmount.setText(cursor.getString(PurchaseActivity.COL_PURCHASE_RATE));         // // TODO: 20/2/17
     }
 
     public class PurchaseViewHolder{

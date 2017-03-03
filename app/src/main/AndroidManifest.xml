@@ -21,12 +21,6 @@
             android:theme="@style/DialogTheme"
             android:excludeFromRecents="true" />
         <activity android:name="com.geekskool.dhobi.Activities.PurchaseActivity" />
-        <provider
-            android:name=".Db.DataProvider"
-            android:authorities="com.geekskool.manisha.vipasna"
-            android:exported="false"
-            android:protectionLevel="signature"
-            android:syncable="true"/>
     </application>
 
 </manifest>

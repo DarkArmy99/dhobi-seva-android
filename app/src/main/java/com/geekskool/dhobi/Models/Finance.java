@@ -10,10 +10,12 @@ import io.realm.RealmObject;
 public class Finance extends RealmObject{
 
     private RealmList<Purchase> purchases;
-    private RealmList<Laundry> laundryList;
+  //  private RealmList<Laundry> laundryList;
 
-    public Finance(RealmList<Purchase> purchases, RealmList<Laundry> laundryList) {
+    public Finance(){}
+
+    public Finance(RealmList<Purchase> purchases) {
         this.purchases = purchases;
-        this.laundryList = laundryList;
+   //     this.laundryList = laundryList;
     }
 }

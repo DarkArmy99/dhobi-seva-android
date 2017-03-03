@@ -1,13 +1,10 @@
 package com.geekskool.dhobi.Activities;
 
-import android.content.ContentValues;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
-import com.geekskool.dhobi.Contracts.Contract;
 import com.geekskool.dhobi.R;
 
 /**
@@ -40,17 +37,6 @@ public class StudentActivity extends AppCompatActivity {
 
         int age = Integer.valueOf(mAge.getText().toString());
         int deposit = Integer.valueOf(mDeposit.getText().toString());
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(Contract.StudentEntry.COLUMN_NAME,name);
-        contentValues.put(Contract.StudentEntry.COLUMN_GENDER,gender);
-        contentValues.put(Contract.StudentEntry.COLUMN_AGE,age);
-        contentValues.put(Contract.StudentEntry.COLUMN_ROOM_NUMBER,roomNumber);
-        contentValues.put(Contract.StudentEntry.COLUMN_DEPOSIT,deposit);
-        getContentResolver().insert(Contract.StudentEntry.CONTENT_URI, contentValues);
-
-        Intent intent = new Intent(this, PurchaseActivity.class);
-        startActivity(intent);
     }
 
 }

@@ -1,19 +1,21 @@
 package com.geekskool.dhobi.Db;
 
+import com.geekskool.dhobi.Helpers.DbConstants;
 import com.geekskool.dhobi.Models.Course;
 
 import io.realm.Realm;
 import io.realm.Realm.Transaction.OnSuccess;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by manisharana on 1/3/17.
  */
-
 public class CourseRepository {
 
     private Realm realm = Realm.getDefaultInstance();
 
-    public void addCourse(final Course course, final OnSuccess callback){
+    public void add(final Course course, final OnSuccess callback){
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -25,11 +27,16 @@ public class CourseRepository {
 
     }
 
-    public Course getCourse(int id){
-        return realm.where(Course.class).equalTo("id", id).findFirst();
+    public Course get(int id){
+        return realm.where(Course.class).equalTo(DbConstants.courseID, id).findFirst();
     }
 
-    public void stop(){
+    public RealmResults<Course> getAll(){
+        RealmResults<Course> results = realm.where(Course.class).findAll();
+        return results.sort(DbConstants.COURSE_START_DATE, Sort.ASCENDING);
+    }
+
+    public void close(){
         realm.close();
     }
 }
