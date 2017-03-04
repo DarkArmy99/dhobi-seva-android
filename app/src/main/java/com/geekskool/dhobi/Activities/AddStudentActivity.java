@@ -49,7 +49,6 @@ public class AddStudentActivity extends AppCompatActivity implements Realm.Trans
         Student student = getStudent();
         if (student != null)
             studentRepo.addStudent(courseId,student,this);
-
     }
 
     public void closeDialogBox(View view) {

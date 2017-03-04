@@ -19,4 +19,8 @@
     <string name="should_not_be_empty">Fields should not be empty</string>
     <string name="invalid_error">This field is required.</string>
     <string name="seatNumber">Seat Number</string>
+    <string name="add_deposit">Deposit</string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="saveExpense">Save</string>
+    <string name="cancel">Cancel</string>
 </resources>

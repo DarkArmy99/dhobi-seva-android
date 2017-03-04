@@ -37,7 +37,7 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
         mName = (EditText) findViewById(R.id.et_course_name);
         mDuration = (EditText) findViewById(R.id.et_course_duration);
         mLocation = (EditText) findViewById(R.id.et_course_location);
-        mDatePicker = (DatePicker) findViewById(R.id.dp_start_date);
+        mDatePicker = (DatePicker) findViewById(R.id.dp_date);
 
         setUpDatePicker();
     }

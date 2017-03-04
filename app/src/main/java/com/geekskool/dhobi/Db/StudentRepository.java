@@ -6,6 +6,7 @@ import com.geekskool.dhobi.Models.Expense;
 import com.geekskool.dhobi.Models.Student;
 
 import io.realm.Realm;
+import io.realm.Realm.Transaction.OnSuccess;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -18,7 +19,7 @@ public class StudentRepository {
 
     private Realm realm = Realm.getDefaultInstance();
 
-    public void addStudent(String courseId, final Student student, final Realm.Transaction.OnSuccess callback) {
+    public void addStudent(String courseId, final Student student, final OnSuccess callback) {
         final Course course = new CourseRepository().get(courseId);
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -49,5 +50,18 @@ public class StudentRepository {
 
     public RealmResults<Expense> getAllExpenses(String studentId) {
         return getStudent(studentId).getExpenses().sort(DbConstants.expenseDate);
+    }
+
+    public void addExpense(String studentId, final Expense expense, final OnSuccess callback) {
+        final Student student = getStudent(studentId);
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Expense expenseRow = realm.copyToRealmOrUpdate(expense);
+                student.getExpenses().add(expenseRow);
+                if (callback != null)
+                    callback.onSuccess();
+            }
+        });
     }
 }
