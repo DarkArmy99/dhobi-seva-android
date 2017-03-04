@@ -10,7 +10,7 @@ import com.geekskool.dhobi.R;
 /**
  * Created by manisharana on 16/2/17.
  */
-public class PurchaseActivity extends AppCompatActivity {
+public class AddExpenseActivity extends AppCompatActivity {
 
 
     private EditText mName;

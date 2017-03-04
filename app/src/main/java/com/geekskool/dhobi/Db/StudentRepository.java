@@ -2,6 +2,7 @@ package com.geekskool.dhobi.Db;
 
 import com.geekskool.dhobi.Helpers.DbConstants;
 import com.geekskool.dhobi.Models.Course;
+import com.geekskool.dhobi.Models.Expense;
 import com.geekskool.dhobi.Models.Student;
 
 import io.realm.Realm;
@@ -46,5 +47,7 @@ public class StudentRepository {
     }
 
 
-
+    public RealmResults<Expense> getAllExpenses(String studentId) {
+        return getStudent(studentId).getExpenses().sort(DbConstants.expenseDate);
+    }
 }

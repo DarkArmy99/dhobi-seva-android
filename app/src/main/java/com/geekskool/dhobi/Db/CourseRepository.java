@@ -32,8 +32,7 @@ public class CourseRepository {
     }
 
     public RealmResults<Course> getAll(){
-        RealmResults<Course> results = realm.where(Course.class).findAll();
-        return results.sort(DbConstants.courseStartDate, Sort.ASCENDING);
+        return realm.where(Course.class).findAllSorted(DbConstants.courseStartDate, Sort.ASCENDING);
     }
 
     public void close() {

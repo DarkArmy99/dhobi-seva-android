@@ -1,14 +1,10 @@
 package com.geekskool.dhobi.Models;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-
 /**
  * Created by manisharana on 16/2/17.
  */
-public class Purchase extends RealmObject {
+public class Purchase{
 
-    @PrimaryKey
     private String id;
     private String name;
     private int quantity;

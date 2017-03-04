@@ -14,4 +14,5 @@ public class DbConstants {
     public static final String studentID = "id";
     public static String studentName = "name";
 
+    public static String expenseDate = "date";
 }

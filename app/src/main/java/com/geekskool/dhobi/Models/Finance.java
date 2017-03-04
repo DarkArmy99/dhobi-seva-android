@@ -1,21 +1,29 @@
 package com.geekskool.dhobi.Models;
 
-import io.realm.RealmList;
-import io.realm.RealmObject;
-
 /**
  * Created by manisharana on 24/2/17.
  */
 
-public class Finance extends RealmObject{
+public class Finance {
 
-    private RealmList<Purchase> purchases;
-  //  private RealmList<Laundry> laundryList;
-
-
-    public Finance() {
-        this.purchases = new RealmList<>();
-     //   this.purchases = purchases;
-   //     this.laundryList = laundryList;
-    }
+//    private RealmList<Deposit> deposits;
+//    private RealmList<Purchase> purchases;
+//    private RealmList<Laundry> laundryList;
+//
+//
+//    public Finance() {
+//
+//    }
+//
+//    public RealmList<Deposit> getDeposits() {
+//        return deposits;
+//    }
+//
+//    public RealmList<Purchase> getPurchases() {
+//        return purchases;
+//    }
+//
+//    public RealmList<Laundry> getLaundryList() {
+//        return laundryList;
+//    }
 }

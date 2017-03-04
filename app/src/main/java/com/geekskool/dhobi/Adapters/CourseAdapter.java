@@ -7,11 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.geekskool.dhobi.Activities.MainActivity;
+import com.geekskool.dhobi.Helpers.Util;
 import com.geekskool.dhobi.Models.Course;
 import com.geekskool.dhobi.R;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
@@ -29,11 +27,6 @@ public class CourseAdapter extends RealmRecyclerViewAdapter<Course,CourseAdapter
         this.activity = activity;
     }
 
-    private String getDateInFormat(long date) {
-        Date curr = new Date(date);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
-        return sdf.format(curr);
-    }
 
     @Override
     public CourseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,8 +39,8 @@ public class CourseAdapter extends RealmRecyclerViewAdapter<Course,CourseAdapter
         Course course = getData().get(position);
         holder.course = course;
         holder.name.setText(course.getDescription());
-        holder.sDate.setText(getDateInFormat(course.getStartDate()));
-        holder.eDate.setText(getDateInFormat(course.getEndDate()));
+        holder.sDate.setText(Util.getDateInFormat(course.getStartDate()));
+        holder.eDate.setText(Util.getDateInFormat(course.getEndDate()));
     }
 
     @Override
