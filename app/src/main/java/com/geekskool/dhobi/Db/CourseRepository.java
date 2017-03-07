@@ -11,10 +11,7 @@ import io.realm.Sort;
 /**
  * Created by manisharana on 1/3/17.
  */
-public class CourseRepository {
-
-
-    private Realm realm = Realm.getDefaultInstance();
+public class CourseRepository extends Repository{
 
     public void add(final Course course, final OnSuccess callback){
         realm.executeTransaction(new Realm.Transaction() {
@@ -27,15 +24,12 @@ public class CourseRepository {
         });
     }
 
-    public Course get(String id){
-        return realm.where(Course.class).equalTo(DbConstants.courseID, id).findFirst();
+    public Course get(String courseId){
+        return realm.where(Course.class).equalTo(DbConstants.courseID, courseId).findFirst();
     }
 
     public RealmResults<Course> getAll(){
         return realm.where(Course.class).findAllSorted(DbConstants.courseStartDate, Sort.ASCENDING);
     }
 
-    public void close() {
-        realm.close();
-    }
 }

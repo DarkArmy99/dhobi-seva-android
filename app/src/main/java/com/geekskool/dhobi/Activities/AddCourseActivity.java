@@ -56,7 +56,6 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
         finish();
     }
 
-
     public void validateCourse(View view) {
         Course course = getCourse();
         if (course != null) {
@@ -85,6 +84,7 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
     private long getEndDate(Integer days) {
         return mStartDate + Constants.getMilliseconds(days);
     }
+
 
     @Override
     public void onDateChanged(DatePicker view, int year, int month, int day) {

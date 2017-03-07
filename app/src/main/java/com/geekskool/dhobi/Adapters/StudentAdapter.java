@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.geekskool.dhobi.Activities.StudentListActivity;
 import com.geekskool.dhobi.Models.Student;
 import com.geekskool.dhobi.R;
 
@@ -18,12 +17,8 @@ import io.realm.RealmRecyclerViewAdapter;
  */
 public class StudentAdapter extends RealmRecyclerViewAdapter<Student,StudentAdapter.StudentViewHolder>{
 
-
-    private final StudentListActivity activity;
-
-    public StudentAdapter(StudentListActivity activity, OrderedRealmCollection<Student> studentList) {
+    public StudentAdapter(OrderedRealmCollection<Student> studentList) {
         super(studentList,true);
-        this.activity = activity;
     }
 
     @Override
@@ -35,7 +30,6 @@ public class StudentAdapter extends RealmRecyclerViewAdapter<Student,StudentAdap
     @Override
     public void onBindViewHolder(StudentViewHolder holder, int position) {
         Student student = getData().get(position);
-        holder.student = student;
         holder.sName.setText(student.getName());
         holder.sRoomNumber.setText(student.getRoomNumber());
         holder.sSeatNumber.setText(student.getSeatNumber());
@@ -46,25 +40,19 @@ public class StudentAdapter extends RealmRecyclerViewAdapter<Student,StudentAdap
         return getData().size();
     }
 
-    public class StudentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class StudentViewHolder extends RecyclerView.ViewHolder{
 
         private final TextView sName;
         private final TextView sRoomNumber;
         private final TextView sSeatNumber;
-        private Student student;
 
         public StudentViewHolder(View view) {
             super(view);
             sName = (TextView) view.findViewById(R.id.tv_student_name);
             sRoomNumber = (TextView) view.findViewById(R.id.tv_student_room_number);
             sSeatNumber = (TextView)view.findViewById(R.id.tv_student_seat_number);
-            view.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
-            activity.goToNextActivity(student);
-        }
     }
 
 

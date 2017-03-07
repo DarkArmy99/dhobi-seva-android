@@ -10,17 +10,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.geekskool.dhobi.Adapters.CourseAdapter;
+import com.geekskool.dhobi.Adapters.RecyclerItemClickListener;
 import com.geekskool.dhobi.Db.CourseRepository;
 import com.geekskool.dhobi.Helpers.Constants;
 import com.geekskool.dhobi.Models.Course;
 import com.geekskool.dhobi.R;
 
 import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerItemClickListener.OnItemClickListener {
 
     private RecyclerView mRecyclerView;
     private CourseRepository courseRepository;
+    private RealmResults<Course> courseList;
 
 
     @Override
@@ -33,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpRecyclerView() {
-        RealmRecyclerViewAdapter mAdapter = new CourseAdapter(this, courseRepository.getAll());
+        courseList = courseRepository.getAll();
+        RealmRecyclerViewAdapter mAdapter = new CourseAdapter(courseList);
         mRecyclerView.setAdapter(mAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.addItemDecoration(decoration);
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,mRecyclerView,this));
     }
 
     public void addModelView(View view) {
@@ -50,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToNext(Course course) {
+    public void goToNextActivity(Course course) {
         Intent intent = new Intent(this, StudentListActivity.class);
         intent.putExtra(Constants.COURSE_ID, course.getId());
         startActivity(intent);
@@ -63,4 +68,9 @@ public class MainActivity extends AppCompatActivity {
         courseRepository.close();
     }
 
+    @Override
+    public void onItemClick(View view, int position) {
+        int itemPosition = mRecyclerView.getChildLayoutPosition(view);
+        goToNextActivity(courseList.get(itemPosition));
+    }
 }

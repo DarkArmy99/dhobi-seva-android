@@ -17,8 +17,7 @@ public class VipasnaApplication extends Application {
         Realm.init(this);
         RealmConfiguration realmConfig = new RealmConfiguration.Builder()
                 .name(DbConstants.FILENAME)
-                .deleteRealmIfMigrationNeeded()
-                .schemaVersion(1)
+                .schemaVersion(0)
                 .build();
         Realm.setDefaultConfiguration(realmConfig);
     }

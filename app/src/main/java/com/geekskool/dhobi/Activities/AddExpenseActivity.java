@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
-import com.geekskool.dhobi.Db.StudentRepository;
+import com.geekskool.dhobi.Db.ExpenseRepository;
 import com.geekskool.dhobi.Helpers.Constants;
 import com.geekskool.dhobi.Models.Expense;
 import com.geekskool.dhobi.R;
@@ -30,19 +30,20 @@ public class AddExpenseActivity extends AppCompatActivity implements Realm.Trans
     private EditText mRateView;
     private DatePicker mDateView;
     private String studentId;
-    private StudentRepository studentRepo;
+    private ExpenseRepository expenseRepo;
     private long mExpenseDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
-        studentRepo = new StudentRepository();
+        expenseRepo = new ExpenseRepository();
         mNameView = (EditText) findViewById(R.id.et_expense_name);
         mQuantityView = (EditText) findViewById(R.id.et_expense_quantity);
         mRateView = (EditText) findViewById(R.id.et_expense_rate);
         mDateView = (DatePicker) findViewById(R.id.dp_date);
-        getStudentId();
+
+        studentId = getStudentId();
         setUpDatePicker();
     }
 
@@ -53,23 +54,23 @@ public class AddExpenseActivity extends AppCompatActivity implements Realm.Trans
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
         mDateView.init(year, month, day, this);
+        mExpenseDate = cal.getTimeInMillis();
     }
 
-    private void getStudentId() {
+    private String getStudentId() {
         Intent intent = getIntent();
-        if(intent !=null)
-            studentId = intent.getStringExtra(Constants.STUDENT_ID);
+        return intent != null ? intent.getStringExtra(Constants.STUDENT_ID):Constants.EMPTY_STRING;
     }
 
     public void closeDialogBox(View view) {
         finish();
     }
 
-    // date picker fix, name fix
+    // TODO: name,dropdown fix
     public void validateExpense(View view) {
         Expense expense = getExpense();
         if(expense != null)
-            studentRepo.addExpense(studentId,expense,this);
+            expenseRepo.addExpense(studentId,expense,this);
     }
 
     @Nullable
@@ -100,7 +101,7 @@ public class AddExpenseActivity extends AppCompatActivity implements Realm.Trans
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        studentRepo.close();
+        expenseRepo.close();
     }
 
     @Override

@@ -41,7 +41,6 @@ public class ExpenseAdapter extends RealmRecyclerViewAdapter<Expense,ExpenseAdap
         return getData().size();
     }
 
-
     class ExpenseViewHolder extends RecyclerView.ViewHolder{
         private final TextView pName;
         private final TextView pDate;

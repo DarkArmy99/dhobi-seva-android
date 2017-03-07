@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.geekskool.dhobi.Adapters.RecyclerItemClickListener;
 import com.geekskool.dhobi.Adapters.StudentAdapter;
 import com.geekskool.dhobi.Db.StudentRepository;
 import com.geekskool.dhobi.Helpers.Constants;
@@ -16,16 +17,18 @@ import com.geekskool.dhobi.Models.Student;
 import com.geekskool.dhobi.R;
 
 import io.realm.RealmRecyclerViewAdapter;
+import io.realm.RealmResults;
 
 /**
  * Created by manisharana on 27/2/17.
  */
 
-public class StudentListActivity extends AppCompatActivity{
+public class StudentListActivity extends AppCompatActivity implements RecyclerItemClickListener.OnItemClickListener {
 
     private String courseId;
     private RecyclerView mRecyclerView;
     private StudentRepository studentRepo;
+    private RealmResults<Student> studentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +37,17 @@ public class StudentListActivity extends AppCompatActivity{
         studentRepo = new StudentRepository();
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
         courseId = getCourseId();
-        setUpRecyclerView(courseId);
+        setUpRecyclerView();
     }
 
     private String getCourseId() {
         Intent intent = getIntent();
-        return intent != null ? courseId = intent.getStringExtra(Constants.COURSE_ID) : "";
+        return intent != null ? intent.getStringExtra(Constants.COURSE_ID) : Constants.EMPTY_STRING;
     }
 
-    private void setUpRecyclerView(String courseId) {
-        RealmRecyclerViewAdapter mAdapter = new StudentAdapter(this, studentRepo.getAllStudents(courseId));
+    private void setUpRecyclerView() {
+        studentList = studentRepo.getAllStudents(courseId);
+        RealmRecyclerViewAdapter mAdapter = new StudentAdapter(studentList);
         mRecyclerView.setAdapter(mAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -53,6 +57,7 @@ public class StudentListActivity extends AppCompatActivity{
         mRecyclerView.addItemDecoration(decoration);
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,mRecyclerView,this));
     }
 
     public void addModelView(View view) {
@@ -72,5 +77,11 @@ public class StudentListActivity extends AppCompatActivity{
         super.onDestroy();
         mRecyclerView.setAdapter(null);
         studentRepo.close();
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        int itemPosition = mRecyclerView.getChildLayoutPosition(view);
+        goToNextActivity(studentList.get(itemPosition));
     }
 }

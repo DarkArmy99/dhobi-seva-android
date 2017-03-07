@@ -2,12 +2,10 @@ package com.geekskool.dhobi.Db;
 
 import com.geekskool.dhobi.Helpers.DbConstants;
 import com.geekskool.dhobi.Models.Course;
-import com.geekskool.dhobi.Models.Expense;
 import com.geekskool.dhobi.Models.Student;
 
 import io.realm.Realm;
 import io.realm.Realm.Transaction.OnSuccess;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -15,12 +13,10 @@ import io.realm.Sort;
  * Created by manisharana on 1/3/17.
  */
 
-public class StudentRepository {
-
-    private Realm realm = Realm.getDefaultInstance();
+public class StudentRepository extends Repository{
 
     public void addStudent(String courseId, final Student student, final OnSuccess callback) {
-        final Course course = new CourseRepository().get(courseId);
+        final Course course = getCourse(courseId);
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -32,36 +28,17 @@ public class StudentRepository {
         });
     }
 
-    public Student getStudent(String id) {
-        return realm.where(Student.class).equalTo(DbConstants.studentID, id).findFirst();
+    private Course getCourse(String courseId) {
+        return new CourseRepository().get(courseId);
     }
 
+    public Student getStudent(String studentId) {
+        return realm.where(Student.class).equalTo(DbConstants.studentID, studentId).findFirst();
+    }
 
     public RealmResults<Student> getAllStudents(String courseId) {
-        Course course = realm.where(Course.class).equalTo(DbConstants.courseID, courseId).findFirst();
-        RealmList<Student> students = course.getStudents();
-        return students.sort(DbConstants.studentName, Sort.ASCENDING);
-    }
-
-    public void close() {
-        realm.close();
+        return getCourse(courseId).getStudents().sort(DbConstants.studentName, Sort.ASCENDING);
     }
 
 
-    public RealmResults<Expense> getAllExpenses(String studentId) {
-        return getStudent(studentId).getExpenses().sort(DbConstants.expenseDate);
-    }
-
-    public void addExpense(String studentId, final Expense expense, final OnSuccess callback) {
-        final Student student = getStudent(studentId);
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Expense expenseRow = realm.copyToRealmOrUpdate(expense);
-                student.getExpenses().add(expenseRow);
-                if (callback != null)
-                    callback.onSuccess();
-            }
-        });
-    }
 }

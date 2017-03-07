@@ -33,22 +33,20 @@ public class AddStudentActivity extends AppCompatActivity implements Realm.Trans
         setContentView(R.layout.activity_add_student);
         studentRepo = new StudentRepository();
 
-        getCourseId();
+        courseId = getCourseId();
         mNameView = (EditText) findViewById(R.id.et_student_name);
         mRoomNumberView = (EditText) findViewById(R.id.et_student_room_number);
         mSeatNumberView = (EditText) findViewById(R.id.et_student_seat_number);
     }
 
-    private void getCourseId() {
+    private String getCourseId() {
         Intent intent = getIntent();
-        if(intent !=null)
-            courseId = intent.getStringExtra(Constants.COURSE_ID);
+        return intent !=null ? intent.getStringExtra(Constants.COURSE_ID):Constants.EMPTY_STRING;
     }
 
     public void validateStudent(View view) {
         Student student = getStudent();
-        if (student != null)
-            studentRepo.addStudent(courseId,student,this);
+        if (student != null) studentRepo.addStudent(courseId,student,this);
     }
 
     public void closeDialogBox(View view) {

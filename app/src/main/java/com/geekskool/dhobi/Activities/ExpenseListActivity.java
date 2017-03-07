@@ -17,7 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.geekskool.dhobi.Adapters.ExpenseAdapter;
-import com.geekskool.dhobi.Db.StudentRepository;
+import com.geekskool.dhobi.Db.ExpenseRepository;
 import com.geekskool.dhobi.Helpers.Constants;
 import com.geekskool.dhobi.Models.Expense;
 import com.geekskool.dhobi.R;
@@ -36,26 +36,24 @@ import static com.geekskool.dhobi.Helpers.Util.isInvalid;
 public class ExpenseListActivity extends AppCompatActivity implements Realm.Transaction.OnSuccess {
 
     private RecyclerView mRecyclerView;
-    private StudentRepository studentRepo;
+    private ExpenseRepository expenseRepo;
     private String studentId;
     private AlertDialog alertDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
-        studentRepo = new StudentRepository();
-
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
-        fab.setImageResource(R.drawable.ic_expense);
+        ((FloatingActionButton) findViewById(R.id.fab_add)).setImageResource(R.drawable.ic_expense);
+
+        expenseRepo = new ExpenseRepository();
         studentId = getStudentId();
-        setUpRecyclerView(studentId);
+        setUpRecyclerView();
     }
 
-    private void setUpRecyclerView(String studentId) {
-        RealmRecyclerViewAdapter mAdapter = new ExpenseAdapter(studentRepo.getAllExpenses(studentId));
+    private void setUpRecyclerView() {
+        RealmRecyclerViewAdapter mAdapter = new ExpenseAdapter(expenseRepo.getAllExpenses(studentId));
         mRecyclerView.setAdapter(mAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -69,12 +67,12 @@ public class ExpenseListActivity extends AppCompatActivity implements Realm.Tran
 
     private String getStudentId() {
         Intent intent = getIntent();
-        return intent != null ? intent.getStringExtra(Constants.STUDENT_ID) :"";
+        return intent != null ? intent.getStringExtra(Constants.STUDENT_ID) : Constants.EMPTY_STRING;
     }
 
     public void addModelView(View view) {
         Intent intent = new Intent(this, AddExpenseActivity.class);
-        intent.putExtra(Constants.STUDENT_ID,studentId);
+        intent.putExtra(Constants.STUDENT_ID, studentId);
         startActivity(intent);
     }
 
@@ -82,61 +80,70 @@ public class ExpenseListActivity extends AppCompatActivity implements Realm.Tran
     protected void onDestroy() {
         super.onDestroy();
         mRecyclerView.setAdapter(null);
-        studentRepo.close();
+        expenseRepo.close();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_expense_list,menu);
+        getMenuInflater().inflate(R.menu.menu_expense_list, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_add_deposit : openAddDepositDialog();
+        switch (item.getItemId()) {
+            case R.id.action_add_deposit:
+                openAddDepositDialog();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void openAddDepositDialog() {
-        LayoutInflater layoutInflaterAndroid = LayoutInflater.from(this);
-        View mView = layoutInflaterAndroid.inflate(R.layout.layout_deposit_dialog, null);
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_deposit_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(mView);
+        builder.setView(view);
 
-        final EditText depositView = (EditText) mView.findViewById(R.id.et_deposit_amount);
-        builder
-                .setCancelable(false)
+        setPostiveButton(builder, view);
+        setNegativeButton(builder);
+
+        alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void setNegativeButton(AlertDialog.Builder builder) {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialogBox, int id) {
+                dialogBox.cancel();
+            }
+        });
+    }
+
+    private void setPostiveButton(AlertDialog.Builder builder, View view) {
+        final EditText depositView = (EditText) view.findViewById(R.id.et_deposit_amount);
+        builder.setCancelable(false)
                 .setPositiveButton(R.string.saveExpense, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogBox, int id) {
                         validateDeposit(depositView);
                     }
-                })
-                .setNegativeButton(R.string.cancel,
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialogBox, int id) {
-                                dialogBox.cancel();
-                            }
-                        });
-
-        alertDialog = builder.create();
-        alertDialog.show();
-        }
+                });
+    }
 
     private void validateDeposit(EditText depositView) {
         Expense expense = getExpense(depositView);
-        if(expense != null)
-            studentRepo.addExpense(studentId,expense,this);
+        if (expense != null)
+            expenseRepo.addExpense(studentId, expense, this);
     }
 
     private Expense getExpense(EditText depositView) {
         String amount = depositView.getText().toString();
 
-        if (isInvalid(amount)) {setError(depositView);return null;}
+        if (isInvalid(amount)) {
+            setError(depositView);
+            return null;
+        }
 
-        return new Expense("Deposit",0,0,Float.valueOf(amount),Calendar.getInstance().getTimeInMillis() );
+        return new Expense(Constants.DEPOSIT, Float.valueOf(amount), Calendar.getInstance().getTimeInMillis());
     }
 
     private void setError(EditText editText) {
