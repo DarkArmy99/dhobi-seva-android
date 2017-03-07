@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.geekskool.dhobi.Adapters.ExpenseAdapter;
@@ -33,12 +34,13 @@ import static com.geekskool.dhobi.Helpers.Util.isInvalid;
  * Created by manisharana on 3/3/17.
  */
 
-public class ExpenseListActivity extends AppCompatActivity implements Realm.Transaction.OnSuccess {
+public class ExpenseListActivity extends AppCompatActivity implements Realm.Transaction.OnSuccess, DialogInterface.OnShowListener {
 
     private RecyclerView mRecyclerView;
     private ExpenseRepository expenseRepo;
     private String studentId;
     private AlertDialog alertDialog;
+    private EditText depositView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,32 +103,20 @@ public class ExpenseListActivity extends AppCompatActivity implements Realm.Tran
 
     private void openAddDepositDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.layout_deposit_dialog, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(view);
+        depositView = (EditText) view.findViewById(R.id.et_deposit_amount);
 
-        setPostiveButton(builder, view);
-        setNegativeButton(builder);
+        setUpAlertDialog(view);
+    }
 
-        alertDialog = builder.create();
+    private void setUpAlertDialog(View view) {
+        alertDialog = new AlertDialog.Builder(this)
+                .setView(view)
+                .setPositiveButton(R.string.saveExpense, null)
+                .setNegativeButton(R.string.cancel, null)
+                .create();
+
+        alertDialog.setOnShowListener(this);
         alertDialog.show();
-    }
-
-    private void setNegativeButton(AlertDialog.Builder builder) {
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogBox, int id) {
-                dialogBox.cancel();
-            }
-        });
-    }
-
-    private void setPostiveButton(AlertDialog.Builder builder, View view) {
-        final EditText depositView = (EditText) view.findViewById(R.id.et_deposit_amount);
-        builder.setCancelable(false)
-                .setPositiveButton(R.string.saveExpense, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogBox, int id) {
-                        validateDeposit(depositView);
-                    }
-                });
     }
 
     private void validateDeposit(EditText depositView) {
@@ -138,10 +128,7 @@ public class ExpenseListActivity extends AppCompatActivity implements Realm.Tran
     private Expense getExpense(EditText depositView) {
         String amount = depositView.getText().toString();
 
-        if (isInvalid(amount)) {
-            setError(depositView);
-            return null;
-        }
+        if (isInvalid(amount)) {setError(depositView);return null;}
 
         return new Expense(Constants.DEPOSIT, Float.valueOf(amount), Calendar.getInstance().getTimeInMillis());
     }
@@ -153,5 +140,30 @@ public class ExpenseListActivity extends AppCompatActivity implements Realm.Tran
     @Override
     public void onSuccess() {
         alertDialog.dismiss();
+    }
+
+    @Override
+    public void onShow(final DialogInterface dialog) {
+        setPositiveButton(dialog);
+        setNegativeButton(dialog);
+    }
+
+    private void setNegativeButton(final DialogInterface dialog) {
+        Button buttonNegative = ((AlertDialog) dialog).getButton(DialogInterface.BUTTON_NEGATIVE);
+        buttonNegative.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }});
+    }
+
+    private void setPositiveButton(DialogInterface dialog) {
+        Button buttonPositive = ((AlertDialog) dialog).getButton(DialogInterface.BUTTON_POSITIVE);
+        buttonPositive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validateDeposit(depositView);
+            }});
     }
 }
