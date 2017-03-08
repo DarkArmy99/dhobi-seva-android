@@ -2,10 +2,12 @@ package com.geekskool.dhobi.Db;
 
 import com.geekskool.dhobi.Helpers.DbConstants;
 import com.geekskool.dhobi.Models.Course;
+import com.geekskool.dhobi.Models.Expense;
 import com.geekskool.dhobi.Models.Student;
 
 import io.realm.Realm;
 import io.realm.Realm.Transaction.OnSuccess;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
@@ -40,5 +42,15 @@ public class StudentRepository extends Repository{
         return getCourse(courseId).getStudents().sort(DbConstants.studentName, Sort.ASCENDING);
     }
 
+    private RealmList<Expense> getAllExpenses(String studentId) {
+        return getStudent(studentId).getExpenses();
+    }
 
+    public RealmResults<Expense> getAllExpensesSorted(String studentId) {
+        return getAllExpenses(studentId).sort(DbConstants.expenseDate);
+    }
+
+    public Number getDeposits(String studentId) {
+        return getAllExpenses(studentId).where().equalTo("name","Deposit").sum("amount");
+    }
 }
