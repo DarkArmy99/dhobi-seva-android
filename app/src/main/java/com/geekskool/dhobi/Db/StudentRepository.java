@@ -11,9 +11,8 @@ import io.realm.RealmResults;
  * Created by manisharana on 1/3/17.
  */
 
-public class StudentRepository {
+public class StudentRepository extends Repository {
 
-    private Realm realm = Realm.getDefaultInstance();
 
     public void add(Student student, OnSuccess callback){
         realm.executeTransactionAsync(new Realm.Transaction() {
@@ -30,10 +29,6 @@ public class StudentRepository {
 
     public RealmResults<Student> getAll(){
         return realm.where(Student.class).findAll();
-    }
-
-    public void stop(){
-        realm.close();
     }
 
 }

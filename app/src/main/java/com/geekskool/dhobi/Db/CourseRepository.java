@@ -11,9 +11,8 @@ import io.realm.Sort;
 /**
  * Created by manisharana on 1/3/17.
  */
-public class CourseRepository {
+public class CourseRepository extends Repository{
 
-    private Realm realm = Realm.getDefaultInstance();
 
     public void add(final Course course, final OnSuccess callback){
         realm.executeTransactionAsync(new Realm.Transaction() {

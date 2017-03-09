@@ -8,7 +8,7 @@ import com.geekskool.dhobi.Helpers.DbConstants;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class VipasnaApplication extends Application {
+public class VipassanaApplication extends Application {
 
 
     @Override
@@ -17,8 +17,7 @@ public class VipasnaApplication extends Application {
         Realm.init(this);
         RealmConfiguration realmConfig = new RealmConfiguration.Builder()
                 .name(DbConstants.FILENAME)
-                .deleteRealmIfMigrationNeeded()
-                .schemaVersion(1)
+                .schemaVersion(0)
                 .build();
         Realm.setDefaultConfiguration(realmConfig);
     }
