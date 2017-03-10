@@ -64,7 +64,6 @@ public class Course extends RealmObject{
     public String getDescription() {
         return description;
     }
-
     public String getId() {
         return id;
     }

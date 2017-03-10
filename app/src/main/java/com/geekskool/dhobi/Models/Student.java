@@ -1,5 +1,7 @@
 package com.geekskool.dhobi.Models;
 
+import java.util.UUID;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
@@ -16,17 +18,22 @@ public class Student  extends RealmObject {
     private String name;
 
     private int deposit;
+
     @Required
     private String roomNumber;
+
+    @Required
+    private String seatNumber;
 
     private Finance finance;
 
     public Student(){}
-    public Student(String name, int deposit,Finance finance, String roomNumber) {
+    public Student(String name, String roomNumber,String seatNumber) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
-        this.deposit = deposit;
-        this.finance = finance;
+        this.finance = new Finance();
         this.roomNumber = roomNumber;
+        this.seatNumber = seatNumber;
     }
 
     public String getName() {
@@ -43,5 +50,13 @@ public class Student  extends RealmObject {
 
     public Finance getFinance() {
         return finance;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getSeatNumber() {
+        return seatNumber;
     }
 }

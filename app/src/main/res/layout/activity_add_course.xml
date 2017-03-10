@@ -10,17 +10,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Activities.AddCourseActivity">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:background="@android:drawable/ic_menu_close_clear_cancel"
-            android:onClick="closeDialogBox" />
-    </FrameLayout>
-
+   <include android:layout_height="wrap_content"
+       android:layout_width="match_parent"
+       layout="@layout/close_view" />
     <EditText
         android:id="@+id/et_course_name"
         android:layout_width="match_parent"

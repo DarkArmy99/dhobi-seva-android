@@ -12,10 +12,10 @@ public class Finance extends RealmObject{
     private RealmList<Purchase> purchases;
   //  private RealmList<Laundry> laundryList;
 
-    public Finance(){}
 
-    public Finance(RealmList<Purchase> purchases) {
-        this.purchases = purchases;
+    public Finance() {
+        this.purchases = new RealmList<>();
+     //   this.purchases = purchases;
    //     this.laundryList = laundryList;
     }
 }

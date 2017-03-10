@@ -12,6 +12,10 @@ public class Constants {
     public static final int MIN_IN_MILLIS =  SECONDS * MILLIS;
     private static final int HRS_TO_MILLIS = HOURS * MINS * MIN_IN_MILLIS;
 
+    // for intents
+    public static final String COURSE_ID = "COURSE_ID";
+    public static final String STUDENT_ID = "STUDENT_ID";
+
     public static long getMilliseconds(Integer days) {
         return days * HRS_TO_MILLIS;
     }

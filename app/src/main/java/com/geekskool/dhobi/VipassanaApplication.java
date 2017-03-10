@@ -22,6 +22,4 @@ public class VipassanaApplication extends Application {
         Realm.setDefaultConfiguration(realmConfig);
     }
 
-
-
 }

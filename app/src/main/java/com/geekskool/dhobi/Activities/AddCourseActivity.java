@@ -25,12 +25,14 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
     private EditText mDuration;
     private long mStartDate;
     private DatePicker mDatePicker;
+    private CourseRepository courseRepo;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
+        courseRepo = new CourseRepository();
 
         mName = (EditText) findViewById(R.id.et_course_name);
         mDuration = (EditText) findViewById(R.id.et_course_duration);
@@ -57,8 +59,9 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
 
     public void validateCourse(View view) {
         Course course = getCourse();
-        if (course != null)
-            new CourseRepository().add(course,this);
+        if (course != null) {
+            courseRepo.add(course,this);
+        }
     }
 
     @Nullable
@@ -96,4 +99,11 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
     public void onSuccess() {
         finish();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        courseRepo.close();
+    }
+
 }
