@@ -1,4 +1,4 @@
-package com.geekskool.dhobi;
+package com.geekskool.dhobi.Helpers;
 
 /**
  * Created by manisharana on 24/2/17.
