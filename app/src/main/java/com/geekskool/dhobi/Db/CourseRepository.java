@@ -13,9 +13,8 @@ import io.realm.Sort;
  */
 public class CourseRepository extends Repository{
 
-
     public void add(final Course course, final OnSuccess callback){
-        realm.executeTransactionAsync(new Realm.Transaction() {
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 realm.copyToRealmOrUpdate(course);
@@ -23,19 +22,18 @@ public class CourseRepository extends Repository{
                     callback.onSuccess();
             }
         });
-
     }
 
-    public Course get(int id){
+    public Course get(String id){
         return realm.where(Course.class).equalTo(DbConstants.courseID, id).findFirst();
     }
 
     public RealmResults<Course> getAll(){
         RealmResults<Course> results = realm.where(Course.class).findAll();
-        return results.sort(DbConstants.COURSE_START_DATE, Sort.ASCENDING);
+        return results.sort(DbConstants.courseStartDate, Sort.ASCENDING);
     }
 
-    public void close(){
+    public void close() {
         realm.close();
     }
 }

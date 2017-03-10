@@ -62,7 +62,6 @@ public class CourseAdapter extends RealmRecyclerViewAdapter<Course,CourseAdapter
         private final TextView eDate;
         private Course course;
 
-
         CourseViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.tv_course_name);

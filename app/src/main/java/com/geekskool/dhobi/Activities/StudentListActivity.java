@@ -9,31 +9,41 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.geekskool.dhobi.Adapters.CourseAdapter;
-import com.geekskool.dhobi.Db.CourseRepository;
+import com.geekskool.dhobi.Adapters.StudentAdapter;
+import com.geekskool.dhobi.Db.StudentRepository;
 import com.geekskool.dhobi.Helpers.Constants;
-import com.geekskool.dhobi.Models.Course;
+import com.geekskool.dhobi.Models.Student;
 import com.geekskool.dhobi.R;
 
 import io.realm.RealmRecyclerViewAdapter;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * Created by manisharana on 27/2/17.
+ */
 
+public class StudentListActivity extends AppCompatActivity{
+
+    private String courseId;
     private RecyclerView mRecyclerView;
-    private CourseRepository courseRepository;
-
+    private StudentRepository studentRepo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
-        courseRepository = new CourseRepository();
+        studentRepo = new StudentRepository();
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
-        setUpRecyclerView();
+        courseId = getCourseId();
+        setUpRecyclerView(courseId);
     }
 
-    private void setUpRecyclerView() {
-        RealmRecyclerViewAdapter mAdapter = new CourseAdapter(this, courseRepository.getAll());
+    private String getCourseId() {
+        Intent intent = getIntent();
+        return intent != null ? courseId = intent.getStringExtra(Constants.COURSE_ID) : "";
+    }
+
+    private void setUpRecyclerView(String courseId) {
+        RealmRecyclerViewAdapter mAdapter = new StudentAdapter(this, studentRepo.getAllStudents(courseId));
         mRecyclerView.setAdapter(mAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -46,13 +56,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addModelView(View view) {
-        Intent intent = new Intent(this, AddCourseActivity.class);
+        Intent intent = new Intent(this, AddStudentActivity.class);
+        intent.putExtra(Constants.COURSE_ID, courseId);
         startActivity(intent);
     }
 
-    public void goToNext(Course course) {
-        Intent intent = new Intent(this, StudentListActivity.class);
-        intent.putExtra(Constants.COURSE_ID, course.getId());
+    public void goToNextActivity(Student student) {
+        Intent intent = new Intent(this, PurchaseActivity.class);
+        intent.putExtra(Constants.COURSE_ID, courseId);
+        intent.putExtra(Constants.STUDENT_ID, student.getId());
         startActivity(intent);
     }
 
@@ -60,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mRecyclerView.setAdapter(null);
-        courseRepository.close();
+        studentRepo.close();
     }
-
 }

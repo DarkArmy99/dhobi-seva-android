@@ -1,11 +1,13 @@
 package com.geekskool.dhobi.Db;
 
 import com.geekskool.dhobi.Helpers.DbConstants;
+import com.geekskool.dhobi.Models.Course;
 import com.geekskool.dhobi.Models.Student;
 
 import io.realm.Realm;
-import io.realm.Realm.Transaction.OnSuccess;
+import io.realm.RealmList;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by manisharana on 1/3/17.
@@ -14,21 +16,27 @@ import io.realm.RealmResults;
 public class StudentRepository extends Repository {
 
 
-    public void add(Student student, OnSuccess callback){
-        realm.executeTransactionAsync(new Realm.Transaction() {
+    public void addStudent(String courseId, final Student student, final Realm.Transaction.OnSuccess callback) {
+        final Course course = new CourseRepository().get(courseId);
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-
+                Student studRow = realm.copyToRealmOrUpdate(student);
+                course.getStudents().add(studRow);
+                if (callback != null)
+                    callback.onSuccess();
             }
         });
     }
 
-    public Student get(String id){
-       return realm.where(Student.class).equalTo(DbConstants.studentID,id).findFirst();
+    public Student getStudent(String id) {
+        return realm.where(Student.class).equalTo(DbConstants.studentID, id).findFirst();
     }
 
-    public RealmResults<Student> getAll(){
-        return realm.where(Student.class).findAll();
-    }
 
+    public RealmResults<Student> getAllStudents(String courseId) {
+        Course course = realm.where(Course.class).equalTo(DbConstants.courseID, courseId).findFirst();
+        RealmList<Student> students = course.getStudents();
+        return students.sort(DbConstants.studentName, Sort.ASCENDING);
+    }
 }

@@ -5,13 +5,13 @@ package com.geekskool.dhobi.Helpers;
  */
 
 public class DbConstants {
-    // for intents
-    public static final String COURSE_ID = "COURSE_ID";
+    public static final String FILENAME = "dhobiSeva.realm";
 
     // column names
-    public static final String COURSE_START_DATE = "startDate";
+    public static final String courseStartDate = "startDate";
     public static final String courseID = "id";
+
     public static final String studentID = "id";
-    public static final String FILENAME = "dhobiSeva.realm";
+    public static String studentName = "name";
 
 }

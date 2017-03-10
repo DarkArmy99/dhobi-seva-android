@@ -5,7 +5,7 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rv_courses"/>
+        android:id="@+id/rv_list"/>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_course"
         android:layout_width="wrap_content"
@@ -13,6 +13,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/dp16"
-        android:onClick="addCourse"
+        android:onClick="addModelView"
         android:src="@android:drawable/ic_input_add" />
 </RelativeLayout>
