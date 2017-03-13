@@ -15,8 +15,8 @@ import io.realm.Sort;
 
 public class StudentRepository extends Repository{
 
-    public void addStudent(String courseId, final Student student, final OnSuccess callback) {
-        final Course course = getCourse(courseId);
+    public void addStudent(String courseId, final Student student, final Realm.Transaction.OnSuccess callback) {
+        final Course course = new CourseRepository().get(courseId);
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -39,6 +39,4 @@ public class StudentRepository extends Repository{
     public RealmResults<Student> getAllStudents(String courseId) {
         return getCourse(courseId).getStudents().sort(DbConstants.studentName, Sort.ASCENDING);
     }
-
-
 }

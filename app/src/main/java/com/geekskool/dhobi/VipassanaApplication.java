@@ -8,7 +8,7 @@ import com.geekskool.dhobi.Helpers.DbConstants;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class VipasnaApplication extends Application {
+public class VipassanaApplication extends Application {
 
 
     @Override
