@@ -12,6 +12,7 @@ public class DbConstants {
     public static final String courseID = "id";
 
     public static final String studentID = "id";
-    public static String studentName = "name";
+    public static final String studentName = "name";
 
+    public static final String expenseDate = "date";
 }

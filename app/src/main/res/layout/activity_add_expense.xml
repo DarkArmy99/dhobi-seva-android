@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".Activities.AddExpenseActivity">
+
+    <include android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        layout="@layout/close_view"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:layout_margin="@dimen/dp8"
+        android:ems="10"
+        android:hint="@string/name"
+        android:id="@+id/et_expense_name" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_margin="@dimen/dp8"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:hint="@string/quantity"
+            android:id="@+id/et_expense_quantity" />
+        <EditText
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_margin="@dimen/dp8"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:hint="@string/rate"
+            android:id="@+id/et_expense_rate" />
+    </LinearLayout>
+    <include android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp8"
+        android:layout_width="match_parent"
+        layout="@layout/date_view"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_purchase"
+        android:layout_margin="@dimen/dp8"
+        android:id="@+id/btn_add_purchase"
+        android:onClick="validateExpense"
+        android:layout_gravity="center|bottom" />
+</LinearLayout>

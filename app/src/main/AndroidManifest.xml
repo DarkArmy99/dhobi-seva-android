@@ -19,10 +19,10 @@
         <activity android:name="com.geekskool.dhobi.Activities.AddStudentActivity"
             android:theme="@style/DialogTheme"/>
         <activity android:name="com.geekskool.dhobi.Activities.AddCourseActivity"
-            android:theme="@style/DialogTheme"
-            android:excludeFromRecents="true" />
-        <activity android:name="com.geekskool.dhobi.Activities.PurchaseActivity" />
+            android:theme="@style/DialogTheme" />
+        <activity android:name="com.geekskool.dhobi.Activities.AddExpenseActivity" android:theme="@style/DialogTheme" />
         <activity android:name=".Activities.StudentListActivity" />
+        <activity android:name=".Activities.ExpenseListActivity" />
     </application>
 
 </manifest>

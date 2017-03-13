@@ -40,26 +40,9 @@
         android:inputType="text"
         android:padding="@dimen/dp8"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <include android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dp8"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/et_start_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/dp8"
-            android:textSize="@dimen/sp16"
-            android:hint="@string/start_date" />
-        <DatePicker
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/dp_start_date"
-            android:layout_height="wrap_content"
-            android:calendarViewShown="false" />
-    </LinearLayout>
-
+        layout="@layout/date_view"/>
     <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

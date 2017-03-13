@@ -1,28 +1,45 @@
 package com.geekskool.dhobi.Models;
 
+import java.util.UUID;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
 
 /**
- * Created by manisharana on 16/2/17.
+ * Created by manisharana on 4/3/17.
  */
-public class Purchase extends RealmObject {
 
+public class Expense extends RealmObject{
+    @Required
     @PrimaryKey
     private String id;
+
+    @Required
     private String name;
     private int quantity;
     private float rate;
-    private float total;
+    private float amount;
     private long date;
 
-    public Purchase(){}
-    public Purchase(String name, int quantity, float rate, float total, long date) {
+    public Expense(){}
+
+    public Expense(String name, int quantity, float rate, float amount, long date) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.quantity = quantity;
         this.rate = rate;
-        this.total = total;
+        this.amount = amount;
         this.date = date;
+    }
+
+    public Expense(String name, float amount, long date) {
+        this(name,0,0,amount,date);
+    }
+
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -37,8 +54,8 @@ public class Purchase extends RealmObject {
         return rate;
     }
 
-    public float getTotal() {
-        return total;
+    public float getAmount() {
+        return amount;
     }
 
     public long getDate() {

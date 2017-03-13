@@ -24,16 +24,12 @@ public class CourseRepository extends Repository{
         });
     }
 
-    public Course get(String id){
-        return realm.where(Course.class).equalTo(DbConstants.courseID, id).findFirst();
+    public Course get(String courseId){
+        return realm.where(Course.class).equalTo(DbConstants.courseID, courseId).findFirst();
     }
 
     public RealmResults<Course> getAll(){
-        RealmResults<Course> results = realm.where(Course.class).findAll();
-        return results.sort(DbConstants.courseStartDate, Sort.ASCENDING);
+        return realm.where(Course.class).findAllSorted(DbConstants.courseStartDate, Sort.ASCENDING);
     }
 
-    public void close() {
-        realm.close();
-    }
 }

@@ -6,12 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.geekskool.dhobi.Activities.MainActivity;
+import com.geekskool.dhobi.Helpers.Util;
 import com.geekskool.dhobi.Models.Course;
 import com.geekskool.dhobi.R;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
@@ -21,18 +18,8 @@ import io.realm.RealmRecyclerViewAdapter;
  */
 public class CourseAdapter extends RealmRecyclerViewAdapter<Course,CourseAdapter.CourseViewHolder> {
 
-
-    private final MainActivity activity;
-
-    public CourseAdapter(MainActivity activity, OrderedRealmCollection<Course> courseList) {
+    public CourseAdapter( OrderedRealmCollection<Course> courseList) {
         super(courseList,true);
-        this.activity = activity;
-    }
-
-    private String getDateInFormat(long date) {
-        Date curr = new Date(date);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
-        return sdf.format(curr);
     }
 
     @Override
@@ -44,10 +31,9 @@ public class CourseAdapter extends RealmRecyclerViewAdapter<Course,CourseAdapter
     @Override
     public void onBindViewHolder(CourseViewHolder holder, int position) {
         Course course = getData().get(position);
-        holder.course = course;
         holder.name.setText(course.getDescription());
-        holder.sDate.setText(getDateInFormat(course.getStartDate()));
-        holder.eDate.setText(getDateInFormat(course.getEndDate()));
+        holder.sDate.setText(Util.getDateInFormat(course.getStartDate()));
+        holder.eDate.setText(Util.getDateInFormat(course.getEndDate()));
     }
 
     @Override
@@ -55,25 +41,19 @@ public class CourseAdapter extends RealmRecyclerViewAdapter<Course,CourseAdapter
         return getData().size();
     }
 
-    class CourseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class CourseViewHolder extends RecyclerView.ViewHolder{
 
         private final TextView name;
         private final TextView sDate;
         private final TextView eDate;
-        private Course course;
 
         CourseViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.tv_course_name);
             sDate = (TextView) view.findViewById(R.id.tv_course_start_date);
             eDate = (TextView) view.findViewById(R.id.tv_course_end_date);
-            view.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
-            activity.goToNext(course);
-        }
     }
 
 }

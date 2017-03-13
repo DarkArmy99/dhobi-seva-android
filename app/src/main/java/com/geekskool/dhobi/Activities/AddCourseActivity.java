@@ -37,7 +37,7 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
         mName = (EditText) findViewById(R.id.et_course_name);
         mDuration = (EditText) findViewById(R.id.et_course_duration);
         mLocation = (EditText) findViewById(R.id.et_course_location);
-        mDatePicker = (DatePicker) findViewById(R.id.dp_start_date);
+        mDatePicker = (DatePicker) findViewById(R.id.dp_date);
 
         setUpDatePicker();
     }
@@ -55,7 +55,6 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
     public void closeDialogBox(View view) {
         finish();
     }
-
 
     public void validateCourse(View view) {
         Course course = getCourse();
@@ -85,6 +84,7 @@ public class AddCourseActivity extends AppCompatActivity implements DatePicker.O
     private long getEndDate(Integer days) {
         return mStartDate + Constants.getMilliseconds(days);
     }
+
 
     @Override
     public void onDateChanged(DatePicker view, int year, int month, int day) {
