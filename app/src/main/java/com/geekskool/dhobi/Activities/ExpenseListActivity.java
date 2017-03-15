@@ -57,7 +57,7 @@ public class ExpenseListActivity extends AppCompatActivity implements Realm.Tran
 
     private void setUpRecyclerView() {
         RealmRecyclerViewAdapter mAdapter = new ExpenseAdapter(expenseRepo.getAllExpenses(studentId));
-       mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);

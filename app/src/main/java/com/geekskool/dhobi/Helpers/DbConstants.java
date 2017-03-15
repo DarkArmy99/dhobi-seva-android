@@ -22,4 +22,5 @@ public class DbConstants {
     public static final String expenseDeposit = "Deposit";
     public static final String expenseAmount = "amount";
     public static final String expenseLaundry = "Laundry";
+    public static final String expenseDate = "date";
 }

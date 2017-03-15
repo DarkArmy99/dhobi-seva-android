@@ -49,7 +49,6 @@ public class StudentListActivity extends AppCompatActivity implements RecyclerIt
     private RecyclerView mRecyclerView;
     private StudentRepository studentRepo;
     private RealmResults<Student> studentList;
-
     private Menu menu;
 
     @Override
@@ -281,5 +280,4 @@ public class StudentListActivity extends AppCompatActivity implements RecyclerIt
             });
         }
     }
-
 }
