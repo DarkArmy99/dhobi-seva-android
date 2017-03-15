@@ -20,6 +20,7 @@ import android.widget.EditText;
 import com.geekskool.dhobi.Adapters.ExpenseAdapter;
 import com.geekskool.dhobi.Db.ExpenseRepository;
 import com.geekskool.dhobi.Helpers.Constants;
+import com.geekskool.dhobi.Helpers.DbConstants;
 import com.geekskool.dhobi.Models.Expense;
 import com.geekskool.dhobi.R;
 
@@ -130,7 +131,7 @@ public class ExpenseListActivity extends AppCompatActivity implements Realm.Tran
 
         if (isInvalid(amount)) {setError(depositView);return null;}
 
-        return new Expense(Constants.DEPOSIT, Float.valueOf(amount), Calendar.getInstance().getTimeInMillis());
+        return new Expense(DbConstants.expenseDeposit, Float.valueOf(amount), Calendar.getInstance().getTimeInMillis());
     }
 
     private void setError(EditText editText) {

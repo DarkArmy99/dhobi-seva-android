@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Vipsana</string>
+    <string name="app_name">Vipassana</string>
     <string name="create_course">Create</string>
     <string name="duration">duration(in days)</string>
     <string name="location">Location</string>
@@ -25,4 +25,6 @@
     <string name="cancel">Cancel</string>
     <string name="end">End</string>
     <string name="view">View</string>
+    <string name="cant_view_pdf">Can\'t view pdf file</string>
+    <string name="pdf_generated">Pdf Generated</string>
 </resources>

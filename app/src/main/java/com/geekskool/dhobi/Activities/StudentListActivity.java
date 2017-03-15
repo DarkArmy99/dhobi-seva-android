@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -19,14 +20,15 @@ import com.geekskool.dhobi.Adapters.RecyclerItemClickListener;
 import com.geekskool.dhobi.Adapters.StudentAdapter;
 import com.geekskool.dhobi.Db.StudentRepository;
 import com.geekskool.dhobi.Helpers.Constants;
-import com.geekskool.dhobi.Models.Expense;
 import com.geekskool.dhobi.Models.Result;
+import com.geekskool.dhobi.Models.ResultMap;
 import com.geekskool.dhobi.Models.Student;
 import com.geekskool.dhobi.R;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.util.PDFBoxResourceLoader;
@@ -35,14 +37,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import io.realm.RealmList;
 import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
 
 /**
  * Created by manisharana on 27/2/17.
  */
-
 public class StudentListActivity extends AppCompatActivity implements RecyclerItemClickListener.OnItemClickListener {
 
     private String courseId;
@@ -50,7 +50,6 @@ public class StudentListActivity extends AppCompatActivity implements RecyclerIt
     private StudentRepository studentRepo;
     private RealmResults<Student> studentList;
 
-    private File root;
     private Menu menu;
 
     @Override
@@ -67,8 +66,6 @@ public class StudentListActivity extends AppCompatActivity implements RecyclerIt
     protected void onStart() {
         super.onStart();
         PDFBoxResourceLoader.init(getApplicationContext());
-        root = android.os.Environment.getExternalStorageDirectory();
-
     }
 
     private String getCourseId() {
@@ -88,7 +85,7 @@ public class StudentListActivity extends AppCompatActivity implements RecyclerIt
         mRecyclerView.addItemDecoration(decoration);
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,mRecyclerView,this));
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, mRecyclerView, this));
     }
 
     public void addModelView(View view) {
@@ -103,7 +100,6 @@ public class StudentListActivity extends AppCompatActivity implements RecyclerIt
         startActivity(intent);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_student_list, menu);
@@ -116,8 +112,8 @@ public class StudentListActivity extends AppCompatActivity implements RecyclerIt
         switch (item.getItemId()) {
             case R.id.action_end_course:
                 item.setEnabled(false);
-                MenuItem viewOption =  menu.getItem(1);
-                endCourse(courseId,item,viewOption);
+                MenuItem viewOption = menu.findItem(R.id.action_view_pdf);
+                endCourse(courseId, item, viewOption);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -125,34 +121,21 @@ public class StudentListActivity extends AppCompatActivity implements RecyclerIt
 
     private void endCourse(String courseId, MenuItem endOption, MenuItem viewOption) {
         StudentRepository repo = new StudentRepository();
-
-        RealmResults<Student> students = repo.getAllStudents(courseId);
-        ArrayList<Result> results = new ArrayList<>();
-        for(Student student : students){
-            RealmList<Expense> expenses1 = repo.getStudent(student.getId()).getExpenses();
-            Number deposit = expenses1.where().equalTo("name", "Deposit").sum("amount");
-            Number laundry = expenses1.where().equalTo("name", "Laundry").sum("amount");
-            Number expenses = expenses1.where().notEqualTo("name", "Laundry").notEqualTo("name", "Deposit").sum("amount");
-            Number balance = deposit.intValue()- laundry.intValue() - expenses.intValue();
-            results.add(new Result(student.getName(),String.valueOf(expenses), String.valueOf(laundry), String.valueOf(deposit), String.valueOf(balance)));
-        }
-
-        new GeneratePdfTask(endOption,viewOption).execute(results);
+        ResultMap resultMaps = repo.getResults(courseId);
+        repo.close();
+        new GeneratePdfTask(resultMaps, endOption, viewOption).execute();
     }
 
     private void viewPdf(String filePath) {
-
-        File pdfFile = new File(filePath);
-        Uri path = Uri.fromFile(pdfFile);
-
+        Uri path = Uri.fromFile(new File(filePath));
         Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
-        pdfIntent.setDataAndType(path, "application/pdf");
+        pdfIntent.setDataAndType(path, Constants.FILE_MIME_TYPE);
         pdfIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         try {
             startActivity(pdfIntent);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(this, "Can't read pdf file", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.cant_view_pdf, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -170,15 +153,22 @@ public class StudentListActivity extends AppCompatActivity implements RecyclerIt
         goToNextActivity(studentList.get(itemPosition));
     }
 
-    public class GeneratePdfTask extends AsyncTask<ArrayList<Result>,String,String>{
+    private void showToast() {
+        Toast.makeText(this, R.string.pdf_generated, Toast.LENGTH_SHORT).show();
+    }
+
+    public class GeneratePdfTask extends AsyncTask<Void, String, String> {
 
         private final MenuItem endOption;
         private final MenuItem viewOption;
+        private final ResultMap resultMap;
 
-        public GeneratePdfTask(MenuItem endOption, MenuItem viewOption) {
+        public GeneratePdfTask(ResultMap resultMap, MenuItem endOption, MenuItem viewOption) {
+            this.resultMap = resultMap;
             this.endOption = endOption;
             this.viewOption = viewOption;
         }
+
 
         @Override
         protected void onPreExecute() {
@@ -186,77 +176,98 @@ public class StudentListActivity extends AppCompatActivity implements RecyclerIt
         }
 
         @Override
-        protected String doInBackground(ArrayList<Result>... params) {
-            //TODO:  assign proper name coursename_timestamp
-            PDFont font = PDType1Font.TIMES_BOLD;
-            PDDocument document = new PDDocument();
-            PDPage pdPage = new PDPage();
-            document.addPage(pdPage);
+        protected String doInBackground(Void... params) {
+            String pageTitle = resultMap.getCourseName().toUpperCase();
 
-            //TODO: filename
+            //TODO:  assign proper name coursename_timestamp
+            // File file = new File("./HelveticaNeueMed.ttf");
+            //  FileReader fr = new FileReader("./HelveticaNeueMed.ttf");
+            // PDFont font = PDType0Font.load(document,file);
+            PDDocument document = new PDDocument();
             try {
-               // File file = new File("./HelveticaNeueMed.ttf");
-              //  FileReader fr = new FileReader("./HelveticaNeueMed.ttf");
-               // PDFont font = PDType0Font.load(document,file);
-                PDPageContentStream cs = new PDPageContentStream(document, pdPage);
-                cs.setFont(font, 18);
-                int offsetY = 0;
-                int offsetX = 25;
-                int size = params[0].size();
-                for(int i = 0; i< size; i++){
-                    printResult(params[0].get(i), cs,offsetX, offsetY);
-                    if(i<size-1)
-                    printResult(params[0].get(++i), cs,offsetX+250, offsetY);
-                    offsetY+=120;
-                }
+                PDPageContentStream cs = getContentStream(document);
+                cs = getUpdatedContentStream(document, cs);
                 cs.close();
-                String path = root.getAbsolutePath() + "/Download/Created.pdf";
+
+                String path = getPath(pageTitle);
                 document.save(path);
                 document.close();
                 return path;
-            } catch (IOException e) {
+            }catch (IOException e) {
                 e.printStackTrace();
                 return null;
             }
         }
 
-        private void printResult(Result result, PDPageContentStream cs, int offsetX, int offset) throws IOException {
-            int y = 700;
-            cs.beginText();
-            cs.newLineAtOffset(offsetX,y-offset);
-            cs.showText("Name : "+result.getStudentName());
-            cs.endText();
-
-            cs.beginText();
-            cs.newLineAtOffset(offsetX,y-offset-20);
-            cs.showText("Expense : "+result.getExpense());
-            cs.endText();
-
-            cs.beginText();
-            cs.newLineAtOffset(offsetX,y-offset-40);
-            cs.showText("Laundry : "+result.getLaundry());
-            cs.endText();
-
-            cs.beginText();
-            cs.newLineAtOffset(offsetX,y-offset-60);
-            cs.showText("Deposit : "+result.getDeposit());
-            cs.endText();
-
-            cs.beginText();
-            cs.newLineAtOffset(offsetX,y-offset-80);
-            cs.showText("Balance : "+result.getBalance());
-            cs.endText();
+        @NonNull
+        private PDPageContentStream getContentStream(PDDocument document) throws IOException {
+            PDFont font = PDType1Font.TIMES_BOLD;
+            PDPage pdPage = new PDPage(PDRectangle.A4);
+            document.addPage(pdPage);
+            PDPageContentStream cs = new PDPageContentStream(document, pdPage);
+            cs.setFont(font, 18);
+            return cs;
         }
 
+
+
+        private PDPageContentStream getUpdatedContentStream(PDDocument document, PDPageContentStream cs) throws IOException {
+            ArrayList<Result> results = resultMap.getResults();
+            String pageTitle = resultMap.getCourseName().toUpperCase();
+            int size = results.size();
+            float pageWidth = document.getPages().get(0).getMediaBox().getWidth();
+            float pageHeight = document.getPages().get(0).getMediaBox().getHeight();
+            float rowHeight = 20;
+            float noOfFieldsInObject = 7;
+            float marginX = 50, marginY = 100;
+            float offsetY = pageHeight - marginY;
+            float offsetX = pageWidth/2;
+
+            print(cs,pageTitle, offsetX,pageHeight-marginX/2);
+            for (int i = 0; i < size; i=i+2){
+                for(int j=0;i+j < size-1;j++){
+                    printResult(results.get(i+j), cs, marginX+(j*offsetX), offsetY, rowHeight);
+                }
+
+                offsetY -= rowHeight * noOfFieldsInObject;
+                if(offsetY <= marginY){
+                    offsetY = pageHeight - marginY;
+                    cs.close();
+                    cs = getContentStream(document);
+                }
+            }
+            return cs;
+        }
+
+
+        private String getPath(String courseName) {
+            return getExternalFilesDir(null) + "/" + courseName + ".pdf";
+        }
+
+        private void printResult(Result result, PDPageContentStream cs, float offsetX, float offsetY, float rowHeight) throws IOException {
+            print(cs, Constants.RESULT_NAME + result.getStudentName(), offsetX, offsetY);
+            print(cs, Constants.RESULT_ROOM_NUMBER + result.getRoomNumber(), offsetX, offsetY - rowHeight);
+            print(cs, Constants.RESULT_EXPENSE + result.getExpense(), offsetX, offsetY - rowHeight * 2);
+            print(cs, Constants.RESULT_LAUNDRY + result.getLaundry(), offsetX, offsetY - rowHeight * 3);
+            print(cs, Constants.RESULT_DEPOSIT + result.getDeposit(), offsetX, offsetY - rowHeight * 4);
+            print(cs, Constants.RESULT_BALANCE + result.getBalance(), offsetX, offsetY - rowHeight * 5);
+        }
+
+        private void print(PDPageContentStream cs, String text, float offsetX, float offsetY) throws IOException {
+            cs.beginText();
+            cs.newLineAtOffset(offsetX, offsetY);
+            cs.showText(text);
+            cs.endText();
+        }
 
         @Override
         protected void onPostExecute(String filePath) {
             super.onPostExecute(filePath);
-            if(filePath != null){
+            if (filePath != null) {
                 showToast();
                 endOption.setEnabled(true);
                 viewOption.setEnabled(true);
-                setUpMenuClickListener(viewOption,filePath);
+                setUpMenuClickListener(viewOption, filePath);
             }
         }
 
@@ -269,10 +280,6 @@ public class StudentListActivity extends AppCompatActivity implements RecyclerIt
                 }
             });
         }
-
     }
 
-    void showToast(){
-        Toast.makeText(this,"Pdf has been generated",Toast.LENGTH_SHORT).show();
-    }
 }
