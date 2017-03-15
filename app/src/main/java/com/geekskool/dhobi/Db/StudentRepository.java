@@ -25,7 +25,7 @@ import static com.geekskool.dhobi.Helpers.DbConstants.studentName;
  * Created by manisharana on 1/3/17.
  */
 
-public class StudentRepository extends Repository{
+public class StudentRepository extends Repository {
 
     public void addStudent(String courseId, final Student student, final OnSuccess callback) {
         final Course course = getCourse(courseId);
