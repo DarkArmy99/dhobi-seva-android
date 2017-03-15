@@ -10,6 +10,8 @@ import com.geekskool.dhobi.Helpers.Util;
 import com.geekskool.dhobi.Models.Course;
 import com.geekskool.dhobi.R;
 
+import java.util.List;
+
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
@@ -18,8 +20,8 @@ import io.realm.RealmRecyclerViewAdapter;
  */
 public class CourseAdapter extends RealmRecyclerViewAdapter<Course,CourseAdapter.CourseViewHolder> {
 
-    public CourseAdapter( OrderedRealmCollection<Course> courseList) {
-        super(courseList,true);
+    public CourseAdapter(List<Course> courseList) {
+        super(courseList, true);
     }
 
     @Override

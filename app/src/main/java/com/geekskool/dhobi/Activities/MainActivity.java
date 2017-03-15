@@ -16,6 +16,8 @@ import com.geekskool.dhobi.Helpers.Constants;
 import com.geekskool.dhobi.Models.Course;
 import com.geekskool.dhobi.R;
 
+import java.util.List;
+
 import io.realm.RealmRecyclerViewAdapter;
 import io.realm.RealmResults;
 
@@ -23,8 +25,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemClick
 
     private RecyclerView mRecyclerView;
     private CourseRepository courseRepository;
-    private RealmResults<Course> courseList;
-
+    private List<Course> courseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
